@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html data-wf-page="6630053b52552d64d7e1c928" data-wf-site="6630053a52552d64d7e1c8b7">
+
+<head>
+  <meta charset="utf-8" />
+  <title>PWA Tools</title>
+  <meta content="PWA Tools" property="og:title" />
+  <meta content="PWA Tools" property="twitter:title" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <link href="css/webflow-style.css" rel="stylesheet" type="text/css" />
+  <script
+    type="text/javascript">!function (o, c) { var n = c.documentElement, t = " w-mod-"; n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch") }(window, document);</script>
+</head>
+
+<body>
+  <div>
+    <div class="menu__mobile-nav-wrapper">
+      <div class="menu__mobile-nav">
+        <div data-w-id="512411b5-2b98-cbc5-2dfc-02dbd3d32afd" class="menu__icon-hover-mobile-nav w-embed"><svg
+            xmlns="http://www.w3.org/2000/svg" width="17.5" height="14.375" viewBox="0 0 17.5 14.375">
+            <path
+              d="M0-14.062A.938.938,0,0,1,.938-15H16.563a.936.936,0,0,1,.938.938.935.935,0,0,1-.937.938H.938A.936.936,0,0,1,0-14.062Zm0,6.25A.936.936,0,0,1,.938-8.75H16.563a.935.935,0,0,1,.938.938.935.935,0,0,1-.937.938H.938A.936.936,0,0,1,0-7.812ZM16.563-.625H.938A.936.936,0,0,1,0-1.562.936.936,0,0,1,.938-2.5H16.563a.935.935,0,0,1,.938.938A.935.935,0,0,1,16.563-.625Z"
+              transform="translate(0 15)" fill="currentColor" />
+          </svg></div>
+      </div>
+      <div data-w-id="512411b5-2b98-cbc5-2dfc-02dbd3d32afe" class="menu__modal-cover"></div>
+    </div>
+    <div class="menu__wrapper">
+      <div>
+        <div class="nav-custom-html w-embed w-script">
+          <style>
+            @media screen and (max-width: 767px) {
+              .menu__item-wrapper:hover .menu__icon {
+                background-color: rgba(0, 0, 0, 0.1) !important;
+              }
+
+              .menu__item-wrapper.w--current {
+                background-color: var(--active-accent-color);
+              }
+            }
+
+            .clickable:hover {
+              background-color: var(--active-accent-color) !important;
+            }
+
+            .hero__wrapper {
+              background-blend-mode: color;
+            }
+
+            * {
+              -webkit-transition-property: color, background-color, border-radius, border-color, border-width, background-position, background-size, box-shadow, opacity, transform !important;
+              -ms-transition-property: color, background-color, border-radius, border-color, border-width, background-position, background-size, box-shadow, opacity, transform !important;
+              transition-property: color, background-color, border-radius, border-color, border-width, background-position, background-size, box-shadow, opacity, transform !important;
+              -webkit-transition-duration: 0.001s;
+              -ms-transition-duration: 0.001s;
+              transition-duration: 0.001s;
+            }
+          </style>
+
+          <script>
+            const menuIcons = document.querySelectorAll(".menu__icon-hover-mobile-nav");
+            const modalCovers = document.querySelectorAll(".menu__modal-cover");
+
+            function addScrollBlock(e) {
+              e.addEventListener("click", function () {
+                document.body.classList.toggle("nav-custom-html");
+              });
+            }
+
+            for (var i = 0; i < menuIcons.length; i++) {
+              addScrollBlock(menuIcons[i]);
+            }
+
+            for (var i = 0; i < modalCovers.length; i++) {
+              addScrollBlock(modalCovers[i]);
+            }
+
+            window.addEventListener("resize", function () {
+              document.body.classList.remove("nav-custom-html")
+            });
+
+            const loadDelayedCSS = () => {
+              const style = document.createElement("style");
+              style.innerHTML = `
+		* {
+		-webkit-transition-duration: .3s !important;
+		-ms-transition-duration: .3s !important;
+    -webkit-transition-timing-function: ease !important;
+		transition-duration: .3s !important;
+    -ms-transition-timing-function: ease !important;
+    transition-timing-function: ease !important;
+		}
+	`;
+              document.head.appendChild(style);
+            };
+
+            document.addEventListener("DOMContentLoaded", () => {
+              setTimeout(loadDelayedCSS, 500);
+
+              const currentPageURL = window.location.href;
+              const linkBlocks = document.querySelectorAll('.menu__wrapper a');
+              [...linkBlocks].find(linkBlock => {
+                const firstChild = linkBlock.firstChild.tagName === 'DIV' ? linkBlock.firstChild : linkBlock.parentElement.className.includes("disclosure") ? linkBlock.parentNode.parentNode.parentNode.querySelectorAll(".menu__icon")[0] : null;
+                const linkURL = linkBlock.href;
+                if (linkURL === currentPageURL) {
+                  firstChild.style.setProperty('background-color', 'var(--active-accent-color)');
+                  return true;
+                }
+              });
+            });
+          </script>
+        </div>
+      </div><a data-w-id="c8b675a6-dbfd-2984-fd2b-26d971fe0516" href="#"
+        class="menu__light-dark-wrapper w-inline-block">
+        <div class="menu__light-dark-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="15.618"
+            height="17.501" viewBox="0 0 15.618 17.501">
+            <path
+              d="M16.469-2.66a.429.429,0,0,0-.08.008,6.941,6.941,0,0,1-1.3.124,6.826,6.826,0,0,1-6.8-6.855,6.852,6.852,0,0,1,3.466-5.961.41.41,0,0,0-.128-.759,10.551,10.551,0,0,0-1.6-.146A8.733,8.733,0,0,0,1.25-7.5,8.746,8.746,0,0,0,9.992,1.25a8.717,8.717,0,0,0,6.789-3.239A.416.416,0,0,0,16.469-2.66ZM9.992-.625A6.881,6.881,0,0,1,3.125-7.5a6.89,6.89,0,0,1,4.559-6.477A8.741,8.741,0,0,0,6.375-9.383,8.741,8.741,0,0,0,12.426-1.07,6.807,6.807,0,0,1,9.992-.625Z"
+              transform="translate(-1.25 16.251)" fill="currentColor" />
+          </svg></div>
+        <div class="menu__light-dark-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+            viewBox="0 0 20 20">
+            <path
+              d="M9.063-16.562A.936.936,0,0,1,10-17.5a.936.936,0,0,1,.938.938v2.5a.935.935,0,0,1-.937.938.935.935,0,0,1-.937-.937ZM6.25-7.5A3.707,3.707,0,0,1,10-11.25,3.729,3.729,0,0,1,13.75-7.5,3.751,3.751,0,0,1,10-3.75,3.729,3.729,0,0,1,6.25-7.5ZM10-5.625A1.875,1.875,0,0,0,11.875-7.5,1.875,1.875,0,0,0,10-9.375,1.875,1.875,0,0,0,8.125-7.5,1.875,1.875,0,0,0,10-5.625ZM0-7.5a.936.936,0,0,1,.938-.937h2.5a.935.935,0,0,1,.938.938.935.935,0,0,1-.937.938H.938A.936.936,0,0,1,0-7.5Zm19.063-.937A.935.935,0,0,1,20-7.5a.935.935,0,0,1-.937.938h-2.5a.935.935,0,0,1-.937-.937.935.935,0,0,1,.938-.937ZM10,2.5a.935.935,0,0,1-.937-.937v-2.5A.935.935,0,0,1,10-1.875a.935.935,0,0,1,.938.938v2.5A.935.935,0,0,1,10,2.5ZM2.929-14.571a.937.937,0,0,1,1.325,0L6.023-12.8a.945.945,0,0,1,0,1.328.945.945,0,0,1-1.328,0l-1.766-1.77a.937.937,0,0,1,0-1.325ZM17.07-1.754a.934.934,0,0,1,0,1.324.934.934,0,0,1-1.324,0L13.977-2.2a.945.945,0,0,1,0-1.328.945.945,0,0,1,1.328,0ZM2.929-.43a.936.936,0,0,1,0-1.324L4.7-3.523a.945.945,0,0,1,1.328,0,.945.945,0,0,1,0,1.328L4.254-.43a.935.935,0,0,1-1.325,0ZM15.746-14.571a.936.936,0,0,1,1.324,0,.935.935,0,0,1,0,1.325L15.3-11.477a.938.938,0,0,1-1.328,0,.945.945,0,0,1,0-1.328Z"
+              transform="translate(-1 17)" fill="currentColor" />
+          </svg></div>
+      </a>
+    </div>
+    <div class="hidden">
+      <div class="fill-surface-1-dark"></div>
+      <div class="fill-surface-2-dark"></div>
+      <div class="fill-surface-3-dark"></div>
+      <div class="fill-surface-1-light"></div>
+      <div class="fill-surface-2-light"></div>
+      <div class="fill-surface-3-light"></div>
+      <div class="fill-color-on-surface-1-dark"></div>
+      <div class="fill-color-on-surface-2-dark"></div>
+      <div class="fill-color-on-surface-1-light"></div>
+      <div class="fill-color-on-surface-2-light"></div>
+      <div class="fill-accent-dark"></div>
+      <div class="fill-accent-light"></div>
+      <div class="fill-dark-alpha-0-15"></div>
+      <div class="fill-light-alpha-0-15"></div>
+      <div class="fill-dark-alpha-0-25"></div>
+      <div class="fill-light-alpha-0-25"></div>
+      <div class="fill-outline"></div>
+      <div class="hidden-custom-html w-embed w-script">
+        <script>
+          window.addEventListener('load', () => {
+            const r = document.querySelector(':root');
+
+            function getColor(element) {
+              return window.getComputedStyle(document.querySelector(element)).getPropertyValue('background-color');
+            }
+
+            const darkMode = {
+              '--surface-1': getColor(".fill-surface-1-dark"),
+              '--surface-2': getColor(".fill-surface-2-dark"),
+              '--surface-3': getColor(".fill-surface-3-dark"),
+              '--color-on-surface-1': getColor(".fill-color-on-surface-1-dark"),
+              '--color-on-surface-2': getColor(".fill-color-on-surface-2-dark"),
+              '--active-accent-color': getColor(".fill-accent-dark"),
+              '--inactive-accent-color': getColor(".fill-accent-light"),
+              '--outline-color': getColor(".fill-outline"),
+              '--alpha-15': getColor(".fill-dark-alpha-0-15"),
+              '--alpha-25': getColor(".fill-dark-alpha-0-25"),
+            }
+
+            const lightMode = {
+              '--surface-1': getColor(".fill-surface-1-light"),
+              '--surface-2': getColor(".fill-surface-2-light"),
+              '--surface-3': getColor(".fill-surface-3-light"),
+              '--color-on-surface-1': getColor(".fill-color-on-surface-1-light"),
+              '--color-on-surface-2': getColor(".fill-color-on-surface-2-light"),
+              '--active-accent-color': getColor(".fill-accent-light"),
+              '--inactive-accent-color': getColor(".fill-accent-dark"),
+              '--outline-color': getColor(".fill-outline"),
+              '--alpha-15': getColor(".fill-light-alpha-0-15"),
+              '--alpha-25': getColor(".fill-light-alpha-0-25"),
+            }
+
+            function setCSSVariables(cssObject) {
+              Object.entries(cssObject).forEach(([variable, value]) => {
+                r.style.setProperty(variable, value);
+              });
+            }
+
+            const matchColor = (color) => {
+              for (const [variable, value] of Object.entries(darkMode)) {
+                if (value === color) {
+                  return variable;
+                }
+              }
+              return null;
+            };
+
+            const replaceColors = ($element) => {
+              const computedStyle = getComputedStyle($element[0]);
+
+              const borderColor = computedStyle.borderColor;
+              const matchedBorderColor = matchColor(borderColor);
+              if (matchedBorderColor) {
+                $element.css('border-color', `var(${matchedBorderColor})`);
+              }
+
+              const color = computedStyle.color;
+              const matchedColor = matchColor(color);
+              if (matchedColor) {
+                $element.css('color', `var(${matchedColor})`);
+              }
+
+              const backgroundColor = computedStyle.backgroundColor;
+              const matchedBackgroundColor = matchColor(backgroundColor);
+              if (matchedBackgroundColor) {
+                $element.css('background-color', `var(${matchedBackgroundColor})`);
+              }
+            };
+
+            $('*').each((index, element) => {
+              replaceColors($(element));
+            });
+
+            function switchMode() {
+              setCSSVariables(localStorage.getItem('lightMode') === "true" ? darkMode : lightMode)
+              const localMode = localStorage.getItem('lightMode');
+              const newMode = localMode === "true" ? "false" : "true";
+              localStorage.setItem('lightMode', newMode ?? "true");
+            }
+
+            document.querySelector(".menu__light-dark-wrapper").addEventListener("click", function () {
+              switchMode();
+            });
+
+            setCSSVariables(localStorage.getItem('lightMode') === "true" ? lightMode : darkMode)
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+  <div style="opacity:0" class="content__wrapper">
+    <section class="content__section hero">
+      <div class="card__wrapper">
+        <div class="hero__wrapper fill-bg-abstract-3 card__thumbnail2 fill-surface-2-dark">
+          <div class="hero__content">
+            <h1>鸡你太美</h1>
+            <p class="p-large">鸡你太美，baby~oh~~~，鸡你太美，baby~oh~~~，鸡你实在是太美~baby~oh~~~，鸡你太美，baby~oh~~
+              迎面走来的你让我如此蠢蠢欲动，这种感觉我从未有Caush i got a crush on you who you，吔~
+              在今后的节目中，我还准备了很多我自己作词作曲编舞的原创作品，期待的话请多多为我投票吧~mua~</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <script src="js/jquery.js" type="text/javascript"></script>
+  <script src="js/webflow-script.js" type="text/javascript"></script>
+  <style>
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rippleAnimation {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.1);
+      animation: rippleEffect 0.5s ease-in-out;
+    }
+
+    @keyframes rippleEffect {
+      0% {
+        transform: scale(0.1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(var(--scale));
+      }
+    }
+  </style>
+  <script>
+    //Ripple script
+    const buttons = document.querySelectorAll('.ripple')
+
+    buttons.forEach(button => {
+      button.onmousedown = function (e) {
+
+        const x = e.pageX - this.offsetLeft;
+        const y = e.pageY - this.offsetTop;
+        const w = this.offsetWidth;
+
+        const ripple = document.createElement('span');
+
+        ripple.className = 'rippleAnimation';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.setProperty('--scale', w);
+
+        this.appendChild(ripple);
+
+        setTimeout(() => {
+          ripple.parentNode.removeChild(ripple);
+        }, 500);
+      }
+    })
+  </script>
+</body>
+
+</html>
