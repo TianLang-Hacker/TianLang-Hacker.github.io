@@ -44,7 +44,8 @@ export default defineConfig({
         }
     ],  
     footer: {
-      message: '<a href="/LICENSE">MIT License</a>',
+      
+      message: '<a href="https://icp.gov.moe/?keyword=20241034" target="_blank">萌ICP备20241034号</a>',
       copyright: 'Copyright © 2024 天狼Hacker'
     }
   },

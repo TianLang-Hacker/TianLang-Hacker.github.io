@@ -10,6 +10,6 @@ hero:
     - theme: brand
       text: 开始阅读
       link: /6
-    # - theme: alt
-    #   text: Github
-    #   link: /6
+    - theme: alt
+      text: MIT License
+      link: /LICENSE.md
