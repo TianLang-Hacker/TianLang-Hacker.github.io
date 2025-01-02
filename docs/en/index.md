@@ -10,8 +10,13 @@ hero:
     - theme: brand
       text: Start reading
       link: /6
-    # - theme: alt
-    #   text: Github
-    #   link: /6
+    - 
+      theme: alt
+      text: MIT License
+      link: /LICENSE.md
+    -
+      theme: alt
+      text: Cyber Fireworks
+      link: http://firework.letr.top
 ---
 
