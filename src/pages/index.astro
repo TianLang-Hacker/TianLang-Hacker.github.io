@@ -1,0 +1,89 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import MainCard from "@/components/MainCard.astro";
+import FeatureCard from "@/components/mdx/FeatureCard.astro";
+import GitHubStats from "@/components/mdx/GitHubStats.astro";
+---
+
+<BaseLayout title="Home">
+  <MainCard>
+    <div class="space-y-8">
+      <!-- Hero Section -->
+      <section class="py-6">
+        <div class="flex flex-col items-center text-center">
+          <h1
+            class="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-loose"
+          >
+            🌟 TianLang Hacker的小屋
+          </h1>
+          <p class="text-xl text-base-content/80 max-w-3xl mb-8">
+           玩Android，学Kali，做博客，简单吐槽。
+          </p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <a href="/blog" class="btn btn-primary gap-2 btn-shine-effect">
+              <Icon name="lucide:book-open" class="w-5 h-5" />
+              <span>浏览Blog</span>
+            </a>
+            <a href="https://github.com/EveSunMaple/Frosti" target="_blank" class="btn btn-outline gap-2">
+              <Icon name="lucide:github" class="w-5 h-5" />
+              <span>给Frosti的Github项目点个Star</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Start -->
+      <section class="py-6">
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <Icon name="lucide:search" class="w-6 h-6 text-primary" />
+          <span>关于TianLang Hacker</span>
+        </h2>
+        <div class="card bg-base-200 p-6">
+
+          <ol class="space-y-6 mb-6">
+            <li class="relative flex flex-col gap-4 items-start">
+              <div class="flex gap-4 items-center">
+                <div
+                  class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-content flex-shrink-0"
+                >
+                  1
+                </div>
+                <h4 class="font-bold">Kali Linux</h4>
+              </div>
+              <div class="relative w-full">
+                <p class="text-base-content/70 mb-2">2018年入坑Kali，从此踏上不归路。</p>
+              </div>
+            </li>
+
+            <li class="relative flex flex-col gap-4 items-start">
+              <div class="flex gap-4 items-center">
+                <div
+                  class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-content flex-shrink-0"
+                >
+                  2
+                </div>
+                <h4 class="font-bold">开始学习理论知识和编程</h4>
+              </div>
+              <div class="relative w-full">
+                <p class="text-base-content/70 mb-2">2019~2022学习网络有关的理论知识和写Linux Shell脚本和Python脚本。 </p>
+              </div>
+            </li>
+
+            <li class="relative flex flex-col gap-4 items-start">
+              <div class="flex gap-4 items-center">
+                <div
+                  class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-content flex-shrink-0"
+                >
+                  3
+                </div>
+                <h4 class="font-bold">2022~Now</h4>
+              </div>
+              <div class="relative w-full">
+                <p class="text-base-content/70 mb-2">开始摆烂，沉迷游戏无法自拔😋</p>
+              </div>
+            </li>
+          </ol>
+    </div>
+  </MainCard>
+</BaseLayout>

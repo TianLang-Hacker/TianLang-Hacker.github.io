@@ -1,0 +1,98 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import MainCard from "@/components/MainCard.astro";
+import LinkCard from "@/components/mdx/LinkCard.astro";
+import FriendCard from "@/components/mdx/FriendCard.astro";
+---
+
+<BaseLayout title="友情链接">
+  <MainCard>
+    <div class="space-y-10">
+      <!-- Friends Section -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <Icon name="lucide:users" class="w-6 h-6 text-primary" />
+          <span>友情链接</span>
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <FriendCard
+            name="Letr"
+            avatar="https://github.com/letr007.png"
+            description="Ikun头子"
+            url="https://www.letr.top/"
+            type="friend"
+          />
+        </div>
+      </section>
+
+      <!-- Contributors Section -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <Icon name="lucide:git-pull-request" class="w-6 h-6 text-primary" />
+          <span>贡献</span>
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <FriendCard
+            name="TianLang Hacker"
+            avatar="https://github.com/TianLang-Hacker.png"
+            description="爱玩原神😋"
+            url="https://github.com/TianLang-Hacker"
+            type="contributor"
+          />
+          <FriendCard
+            name="Letr"
+            avatar="https://github.com/letr007.png"
+            description="Ikun头子"
+            url="https://github.com/letr007"
+            type="contributor"
+          />
+        </div>
+      </section>
+
+      <!-- Useful Resources Section -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <Icon name="lucide:bookmark" class="w-6 h-6 text-primary" />
+          <span>实用资源</span>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <LinkCard
+            title=".NET"
+            desc=".NET 是一个免费的、跨平台的、开源开发人员平台，用于构建许多不同类型的应用程序。"
+            url="https://dotnet.microsoft.com/zh-cn/learn"
+            icon="simple-icons:dotnet"
+            categories={["文档", "学习", "参考"]}
+          />
+
+          <LinkCard
+            title="Tailwind CSS"
+            desc="了解如何使用 Tailwind 的实用程序类来设置网站样式，而无需编写 CSS。"
+            url="https://tailwindcss.com/docs"
+            icon="simple-icons:tailwindcss"
+            categories={["文档", "CSS", "参考"]}
+          />
+
+          <LinkCard
+            title="DaisyUI"
+            desc="DaisyUI 是一个基于 Tailwind CSS 的组件库，提供了丰富的 UI 组件。"
+            url="https://daisyui.com/components/"
+            icon="simple-icons:daisyui"
+            categories={["组件", "UI", "参考"]}
+          />
+
+          <LinkCard
+            title="TypeScript"
+            desc="TypeScript 是 JavaScript 的超集，添加了可选的类型和编译时检查。"
+            url="https://www.typescriptlang.org/docs/handbook/intro.html"
+            icon="simple-icons:typescript"
+            categories={["文档", "TypeScript", "参考"]}
+          />
+        </div>
+      </section>
+    </div>
+  </MainCard>
+</BaseLayout>

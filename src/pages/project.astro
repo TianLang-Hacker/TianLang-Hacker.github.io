@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import MainCard from "@/components/MainCard.astro";
+import GitHubStats from "@/components/mdx/GitHubStats.astro";
+import RepositoryCard from "@/components/mdx/RepositoryCard.astro";
+---
+
+<BaseLayout title="Projects">
+  <MainCard>
+    <!-- Featured Projects -->
+    <section class="py-4">
+      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+        <Icon name="lucide:star" class="w-6 h-6 text-primary" />
+        <span>特色项目</span>
+      </h2>
+      <GitHubStats username="TianLang-Hacker" showLanguages={true} showContributors={true} />
+    </section>
+
+    <!-- My Repositories -->
+    <section class="py-4">
+      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+        <Icon name="lucide:folder" class="w-6 h-6 text-primary" />
+        <span>我的仓库</span>
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <RepositoryCard repo="TianLang-Hacker/TianLang-Hacker.github.io" isPinned={true} />
+        <RepositoryCard repo="TianLang-Hacker/NetworkSpeedTest" />
+        <RepositoryCard repo="TianLang-Hacker/AutoSendEmail" />
+        <RepositoryCard repo="TianLang-Hacker/Vue-Store" />
+      </div>
+
+      <div class="flex justify-center mt-10">
+        <a
+          href="https://github.com/TianLang-Hacker?tab=repositories"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-outline gap-2"
+        >
+          <Icon name="lucide:github" class="w-5 h-5" />
+          <span>在GitHub上看更多</span>
+        </a>
+      </div>
+    </section>
+  </MainCard>
+</BaseLayout>
