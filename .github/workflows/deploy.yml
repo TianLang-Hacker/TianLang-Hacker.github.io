@@ -1,14 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  # 每次推送到 `main` 分支时触发这个“工作流程”
-  # 如果你使用了别的分支名，请按需将 `main` 替换成你的分支名
   push:
     branches: [ main ]
-  # 允许你在 GitHub 上的 Actions 标签中手动触发此“工作流程”
   workflow_dispatch:
 
-# 允许 job 克隆 repo 并创建一个 page deployment
 permissions:
   contents: read
   pages: write
@@ -18,19 +14,35 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3
+        
+      # 关键修复：使用Node.js 18 (LTS)
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+          
+      # 显式安装PNPM (避免版本冲突)
       - name: Install PNPM
         uses: pnpm/action-setup@v2
-  with:
-    version: 8
         with:
-          # 关键修复：显式指定 PNPM 版本
-          package-manager: pnpm@8 # 或你的具体版本如 pnpm@8.15.0
-          # 可选：指定 Node.js 版本（建议）
-          node-version: 18
+          version: 8
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      # 修复模块兼容性问题
+      - name: Patch module compatibility
+        run: |
+          echo "{\"type\":\"module\"}" > node_modules/sucrase/package.json
+          echo "{\"type\":\"module\"}" > node_modules/@jridgewell/gen-mapping/package.json
+          
+      - name: Build with Astro
+        uses: withastro/action@v3
+        with:
+          package-manager: pnpm
 
   deploy:
     needs: build
@@ -41,4 +53,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4 
