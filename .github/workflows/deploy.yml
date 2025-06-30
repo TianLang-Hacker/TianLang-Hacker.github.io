@@ -22,11 +22,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Install, build, and upload your site
         uses: withastro/action@v3
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+  with:
+    version: 8
         with:
           # 关键修复：显式指定 PNPM 版本
           package-manager: pnpm@8 # 或你的具体版本如 pnpm@8.15.0
           # 可选：指定 Node.js 版本（建议）
-          node-version: 20
+          node-version: 18
 
   deploy:
     needs: build
