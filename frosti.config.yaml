@@ -9,7 +9,7 @@ site:
     light: winter # 主题的浅色模式
     dark: dracula # 主题的深色模式
     code: github-dark # 代码块的主题 https://shiki.style/themes
-  date_format: YYYY MMM dd ddd # 日期格式设置，支持自定义格式
+  date_format: YYYY年MM月DD日 dddd # 日期格式设置，支持自定义格式
   blog: # 博客相关配置
     pageSize: 10 # 每页显示的文章数量
   menu: # 菜单配置
