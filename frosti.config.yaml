@@ -9,9 +9,9 @@ site:
     light: winter # 主题的浅色模式
     dark: dracula # 主题的深色模式
     code: github-dark # 代码块的主题 https://shiki.style/themes
-  date_format: ddd MMM DD YYYY # 日期格式设置，支持自定义格式
+  date_format: YYYY MMM dd ddd # 日期格式设置，支持自定义格式
   blog: # 博客相关配置
-    pageSize: 8 # 每页显示的文章数量
+    pageSize: 10 # 每页显示的文章数量
   menu: # 菜单配置
     - id: home # 菜单项的唯一标识符
       text: 首页 # 菜单项显示的文本
@@ -34,14 +34,14 @@ site:
           href: /blog
           svg: "material-symbols:ink-pen-outline-rounded"
           target: _self
-        - id: documentation
+        - id: Kali-Linux
           text: Kali Linux
-          href: /blog/category/Documentation
+          href: /blog/category/Kali-Linux
           svg: "material-symbols:unknown-document-outline-rounded"
           target: _self
-        - id: examples
+        - id: android
           text: Android
-          href: /blog/category/Examples
+          href: /blog/category/Android
           svg: "material-symbols:deployed-code-outline"
           target: _self
         # 子菜单项配置
