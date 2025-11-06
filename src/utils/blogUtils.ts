@@ -149,7 +149,7 @@ export function generatePageLinks(totalPages: number): {
 export async function getPostsWithStats(posts: CollectionEntry<"blog">[]): Promise<any[]> {
   return Promise.all(
     posts.map(async (blog: CollectionEntry<"blog">) => {
-      const { remarkPluginFrontmatter } = await blog.render();
+      const { remarkPluginFrontmatter } = blog.rendered;
       return {
         ...blog,
         remarkPluginFrontmatter: {
