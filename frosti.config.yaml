@@ -34,14 +34,22 @@ site:
           href: /blog
           svg: "material-symbols:ink-pen-outline-rounded"
           target: _self
-        - id: Kali-Linux
-          text: Kali Linux
-          href: /blog/category/Kali-Linux
+        
+        - id: Linux
+          text: Linux
+          href: /blog/category/Linux
           svg: "material-symbols:unknown-document-outline-rounded"
           target: _self
+        
         - id: android
           text: Android
           href: /blog/category/Android
+          svg: "material-symbols:deployed-code-outline"
+          target: _self
+        
+        - id: nas
+          text: NAS
+          href: /blog/category/NAS
           svg: "material-symbols:deployed-code-outline"
           target: _self
         # 子菜单项配置
