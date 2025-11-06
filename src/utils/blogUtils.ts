@@ -1,5 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
+import { render } from 'astro:content';
 
 /**
  * 获取所有博客文章并根据环境过滤草稿
