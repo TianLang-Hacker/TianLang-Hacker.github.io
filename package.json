@@ -34,7 +34,7 @@
     "marked": "^14.1.4",
     "mdast": "^3.0.0",
     "mdast-util-to-string": "^4.0.0",
-@@ -41,36 +41,36 @@
+
     "medium-zoom": "^1.1.0",
     "octokit": "^4.1.4",
     "rehype-external-links": "^3.0.0",
