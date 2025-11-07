@@ -7,25 +7,19 @@ import dayjs from "@utils/dayjs";
 import { DATE_FORMAT } from "@config";
 import { getAllPosts, sortPostsByDate, getPostsByYearAndMonth } from "@utils/blogUtils";
 
-// 获取所有博客文章
 const allPosts = await getAllPosts();
 
-// 按日期排序
 const sortedPosts = sortPostsByDate(allPosts);
 
-// 按年份和月份分组
 const postsByDate = getPostsByYearAndMonth(sortedPosts);
 
-// 转换为数组并按年份排序（降序）和月份（降序）
 const years = Array.from(postsByDate.keys()).sort((a, b) => parseInt(b) - parseInt(a));
 
-// 从翻译获取月份名称
 const getMonthName = (month: string): string => {
   const monthIndex = parseInt(month);
   return t(`months.${monthIndex}`);
 };
 
-// 统计总文章数
 const totalPosts = allPosts.length;
 ---
 
@@ -72,7 +66,7 @@ const totalPosts = allPosts.length;
                         <ul class="archive-posts">
                           {posts.map((post) => (
                             <li class="archive-item">
-                              <a href={`/blog/${post.slug}`} class="archive-card">
+                              <a href={`/blog/${(post as any).slug}`} class="archive-card">
                                 <time class="archive-date">{dayjs(post.data.pubDate).format(DATE_FORMAT)}</time>
                                 <h4 class="archive-title">{post.data.title}</h4>
                                 {post.data.description && <p class="archive-description">{post.data.description}</p>}

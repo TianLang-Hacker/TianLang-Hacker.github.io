@@ -8,17 +8,13 @@ import { DATE_FORMAT } from "@config";
 import type { CollectionEntry } from "astro:content";
 import { getAllPosts, getCategoriesWithPosts, getCategoryColorClass } from "@utils/blogUtils";
 
-// 获取所有博客文章
 const allPosts = await getAllPosts();
 
-// 提取所有分类并按分类对文章进行分组
 const categoryMap = getCategoriesWithPosts(allPosts);
 
-// 转换为数组并按字母顺序排序
 const categoryEntries = Array.from(categoryMap.entries());
 categoryEntries.sort((a, b) => a[0].localeCompare(b[0]));
 
-// 对每个分类中的文章按日期排序（最新的排在前面）
 categoryEntries.forEach(([_, posts]) => {
   posts.sort(
     (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
@@ -26,7 +22,6 @@ categoryEntries.forEach(([_, posts]) => {
   );
 });
 
-// 统计总分类数
 const totalCategories = categoryMap.size;
 ---
 
@@ -71,7 +66,7 @@ const totalCategories = categoryMap.size;
                     <ul class="post-list">
                       {posts.map((post) => (
                         <li class="post-item">
-                          <a href={`/blog/${post.slug || post.id}`} class="post-link">
+                          <a href={`/blog/${(post as any).slug || post.id}`} class="post-link">
                             <span class="post-title">{post.data.title}</span>
                             <span class="post-date">{dayjs(post.data.pubDate).format(DATE_FORMAT)}</span>
                           </a>
@@ -134,14 +129,12 @@ const totalCategories = categoryMap.size;
       const toggleIcon = header.querySelector(".toggle-icon") as HTMLElement;
       const inner = card.querySelector(".category-inner") as HTMLElement;
 
-      // Initialize maxHeight for all content HTMLElements
       if (content) {
         if (content.classList.contains("expanded")) {
-          // If initially expanded by class, set maxHeight appropriately
           const scrollHeight = content.scrollHeight;
           content.style.maxHeight = Math.min(scrollHeight, MAX_HEIGHT_PX) + "px";
         } else {
-          content.style.maxHeight = "0px"; // Start collapsed
+          content.style.maxHeight = "0px";
         }
       }
 
