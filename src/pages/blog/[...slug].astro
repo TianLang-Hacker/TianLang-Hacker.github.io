@@ -10,7 +10,7 @@ import MainCard from "@/components/MainCard.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map((blog: { slug: any }) => ({
+  return posts.map((blog) => ({
     params: { slug: blog.slug },
     props: { blog },
   }));
