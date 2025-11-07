@@ -1,6 +1,6 @@
 ---
 title: 给Linux安装Clash实现代理上网并且实现软路由功能
-description:
+description: Clash
 pubDate: 11 07 2025
 image:
 categories:
