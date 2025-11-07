@@ -10,23 +10,26 @@ import MainCard from "@/components/MainCard.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map((blog) => ({
-    params: { slug: blog.slug },
-    props: { blog },
-  }));
+  return posts.map((blog) => {
+    const blogEntry = blog as any; // 解决 slug 缺失的类型错误
+    return {
+      params: { slug: blogEntry.slug },
+      props: { blog },
+    };
+  });
 }
 interface Props {
   blog: CollectionEntry<"blog">;
 }
 
 const { blog } = Astro.props;
-const { Content, remarkPluginFrontmatter, headings } = await blog.render();
+const blogToRender = blog as any; // 解决 render() 缺失的类型错误
+const { Content, remarkPluginFrontmatter, headings } = await blogToRender.render();
 const displayDate = blog.data.pubDate ? dayjs(blog.data.pubDate).format(DATE_FORMAT) : "";
 ---
 
 <BaseLayout title={blog.data.title} image={blog.data.image} headings={headings} showTOC={true}>
   <MainCard title={blog.data.title} description={blog.data.description} image={blog.data.image} infoIcon="lucide:info">
-    <!-- Article info using PostInfo component -->
     <PostInfo
       pubDate={displayDate}
       badge={blog.data.badge}
@@ -34,12 +37,10 @@ const displayDate = blog.data.pubDate ? dayjs(blog.data.pubDate).format(DATE_FOR
       time={remarkPluginFrontmatter.readingTime}
     />
 
-    <!-- Categories and tags using PostFilter component -->
     <div class="mb-6">
       <PostFilter categories={blog.data.categories} tags={blog.data.tags} />
     </div>
 
-    <!-- Article Content -->
     <div class="mt-8">
       <div id="content" class="prose max-w-none prose-headings:scroll-mt-20 prose-img:rounded-xl prose-img:mx-auto">
         <Content />
