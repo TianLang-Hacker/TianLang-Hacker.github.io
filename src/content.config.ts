@@ -1,17 +1,34 @@
-// src/content.config.ts
-// import { defineCollection, z } from 'astro:content';
-// // import { glob } from 'astro/loaders';
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
-// const blog = defineCollection({
-//   loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
-//   schema: z.object({
-//     title: z.string(), // 必需
-//     description: z.string().optional(),
-//     pubDate: z.coerce.date(), // 必需
-//     updatedDate: z.coerce.date().optional(),
-//     tags: z.array(z.string()).default([]),
-//     draft: z.boolean().default(false),
-//   }),
-// });
+const blog = defineCollection({
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/blog",
+    generateId: ({ entry }: { entry: string }) => entry.replace(/\\/g, "/").replace(/\.(md|mdx)$/, ""),
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    updated: z.coerce.date().optional(),
+    image: z.string().nullish().transform((value: string | null | undefined) => value ?? undefined),
+    badge: z.string().optional(),
+    draft: z.boolean().default(false),
+    categories: z
+      .array(z.string())
+      .refine((items: string[]) => new Set(items).size === items.length, {
+        message: "categories must be unique",
+      })
+      .optional(),
+    tags: z
+      .array(z.string())
+      .refine((items: string[]) => new Set(items).size === items.length, {
+        message: "tags must be unique",
+      })
+      .optional(),
+  }),
+});
 
-// export const collections = { blog };
+export const collections = { blog };

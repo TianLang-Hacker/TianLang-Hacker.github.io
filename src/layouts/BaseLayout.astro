@@ -52,10 +52,10 @@ const { title, image, headings = [], showTOC = false, isIndexed = true } = Astro
     <Navbar />
 
     <div class="mx-auto w-full flex-grow">
-      <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-4 gap-4 p-4 h-full">
+      <div class="grid grid-cols-1 md:grid-cols-[18vw_minmax(0,1fr)] gap-4 p-4 h-full">
         {/* 修复: 在这里添加 'gap-4' 来恢复内容和页脚之间的间距 */}
         <main
-          class="col-span-1 md:col-span-4 lg:col-span-3 bg-transparent order-1 md:order-2 mt-16 md:mt-0 flex flex-col gap-4"
+          class="col-span-1 bg-transparent order-1 md:order-2 mt-16 md:mt-0 flex flex-col gap-4"
         >
           <div class="flex-grow flex flex-col gap-4">
             <slot />

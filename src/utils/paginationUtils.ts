@@ -1,3 +1,4 @@
+import type { Post } from "@interfaces/data";
 import type { CollectionEntry } from "astro:content";
 import { BLOG_PAGE_SIZE } from "@config";
 import { getAllPosts, getPostsWithStats, sortPostsByDate, sortPostsByPinAndDate } from "./blogUtils";
@@ -27,7 +28,7 @@ export async function getTagPaginationPaths({ paginate }: { paginate: any }) {
   const postsWithStats = await getPostsWithStats(sortedPosts);
 
   return allTags.flatMap((tag) => {
-    const filteredPosts = postsWithStats.filter((blog: any) => blog.data.tags?.includes(tag));
+    const filteredPosts = postsWithStats.filter((blog: Post) => blog.data.tags?.includes(tag));
     return paginate(filteredPosts, {
       params: { tag },
       pageSize: BLOG_PAGE_SIZE,
@@ -47,7 +48,7 @@ export async function getCategoryPaginationPaths({ paginate }: { paginate: any }
   const postsWithStats = await getPostsWithStats(sortedPosts);
 
   return allCategories.flatMap((category) => {
-    const filteredPosts = postsWithStats.filter((blog: any) => blog.data.categories?.includes(category));
+    const filteredPosts = postsWithStats.filter((blog: Post) => blog.data.categories?.includes(category));
     return paginate(filteredPosts, {
       params: { category },
       pageSize: BLOG_PAGE_SIZE,

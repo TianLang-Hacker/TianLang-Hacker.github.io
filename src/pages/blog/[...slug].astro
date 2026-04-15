@@ -3,28 +3,26 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import License from "@components/widgets/License.astro";
 import PostInfo from "@components/widgets/PostInfo.astro";
 import PostFilter from "@components/widgets/PostFilter.astro";
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection, render } from "astro:content";
 import dayjs from "@utils/dayjs";
 import { DATE_FORMAT } from "@config";
 import MainCard from "@/components/MainCard.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map((blog) => {
-    const blogEntry = blog as any; // 解决 slug 缺失的类型错误
-    return {
-      params: { slug: blogEntry.slug },
-      props: { blog },
-    };
-  });
+
+  return posts.map((blog) => ({
+    params: { slug: blog.id },
+    props: { blog },
+  }));
 }
+
 interface Props {
   blog: CollectionEntry<"blog">;
 }
 
-const { blog } = Astro.props;
-const blogToRender = blog as any; // 解决 render() 缺失的类型错误
-const { Content, remarkPluginFrontmatter, headings } = await blogToRender.render();
+const { blog } = Astro.props as Props;
+const { Content, remarkPluginFrontmatter, headings } = await render(blog);
 const displayDate = blog.data.pubDate ? dayjs(blog.data.pubDate).format(DATE_FORMAT) : "";
 ---
 

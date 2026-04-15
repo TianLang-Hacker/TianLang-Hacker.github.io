@@ -1,5 +1,6 @@
+import type { Post } from "@interfaces/data";
 import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 export async function getAllPosts(): Promise<CollectionEntry<"blog">[]> {
   const allBlogPosts = await getCollection("blog");
@@ -106,16 +107,16 @@ export function generatePageLinks(totalPages: number): {
   return pages;
 }
 
-export async function getPostsWithStats(posts: CollectionEntry<"blog">[]): Promise<any[]> {
+export async function getPostsWithStats(posts: CollectionEntry<"blog">[]): Promise<Post[]> {
   return Promise.all(
-    posts.map(async (blog: CollectionEntry<"blog">) => {
-      const blogToRender = blog as any; // 解决 render() 缺失的类型错误
-      const { remarkPluginFrontmatter } = await blogToRender.render();
+    posts.map(async (blog: CollectionEntry<"blog">): Promise<Post> => {
+      const { remarkPluginFrontmatter } = await render(blog);
+
       return {
         ...blog,
         remarkPluginFrontmatter: {
-          readingTime: remarkPluginFrontmatter.readingTime,
-          totalCharCount: remarkPluginFrontmatter.totalCharCount,
+          readingTime: Number(remarkPluginFrontmatter.readingTime ?? 0),
+          totalCharCount: Number(remarkPluginFrontmatter.totalCharCount ?? 0),
         },
       };
     }),

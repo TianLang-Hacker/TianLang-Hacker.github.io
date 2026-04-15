@@ -1,12 +1,17 @@
 import rss, { type RSSFeedItem } from "@astrojs/rss";
 import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_TAB, SITE_TITLE } from "@config";
-import { getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { marked } from "marked";
 
 export async function GET(context: any) {
   const allPosts = await getCollection("blog");
-  const posts = import.meta.env.PROD ? allPosts.filter((post) => !post.data.draft) : allPosts;
-  const sortedPosts = posts.sort((a: any, b: any) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+  const posts = import.meta.env.PROD
+    ? allPosts.filter((post: CollectionEntry<"blog">) => !post.data.draft)
+    : allPosts;
+  const sortedPosts = posts.sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime(),
+  );
 
   function replacePath(content: string, siteUrl: string): string {
     return content.replace(/(src|img|r|l)="([^"]+)"/g, (match, attr, src) => {
@@ -17,14 +22,18 @@ export async function GET(context: any) {
     });
   }
 
-  const items = await Promise.all(sortedPosts.map(async (blog: any) => {
-    const { data: { title, description, pubDate }, body, slug } = blog;
+  const items = await Promise.all(sortedPosts.map(async (blog: CollectionEntry<"blog">) => {
+    const {
+      data: { title, description, pubDate },
+      body,
+      id,
+    } = blog;
 
     const content = body
       ? replacePath(await marked(body), context.site)
       : "No content available.";
 
-    const postURL = new URL(`/blog/${(slug as string)}/`, context.site);
+    const postURL = new URL(`/blog/${id}/`, context.site);
 
     return {
       title,
