@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { frontmatterDateSchema } from "./utils/frontmatterDate";
 
 const blog = defineCollection({
   loader: glob({
@@ -11,8 +12,8 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    pubDate: z.coerce.date(),
-    updated: z.coerce.date().optional(),
+    pubDate: frontmatterDateSchema,
+    updated: frontmatterDateSchema.optional(),
     image: z.string().nullish().transform((value: string | null | undefined) => value ?? undefined),
     badge: z.string().optional(),
     draft: z.boolean().default(false),

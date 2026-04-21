@@ -38,19 +38,25 @@ site:
         - id: Linux
           text: Linux
           href: /blog/category/Linux
-          svg: "material-symbols:unknown-document-outline-rounded"
+          svg: "material-symbols:desktop-windows-outline"
           target: _self
         
         - id: android
           text: Android
           href: /blog/category/Android
-          svg: "material-symbols:deployed-code-outline"
+          svg: "material-symbols:android"
           target: _self
         
         - id: nas
           text: NAS
           href: /blog/category/NAS
-          svg: "material-symbols:deployed-code-outline"
+          svg: "material-symbols:unknown-document-outline-rounded"
+          target: _self
+
+        - id: anime
+          text: 动漫
+          href: /blog/category/Anime
+          svg: "material-symbols:play-circle-outline"
           target: _self
         # 子菜单项配置
     - id: project
