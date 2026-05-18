@@ -14,35 +14,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      # 安装 Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v3
         with:
           node-version: 24
-
-      # 安装依赖（解决 peer dependency 冲突）
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
-
-      # 构建 Astro 项目
-      - name: Build Astro site
-        run: npm run build
-
-      # 检查 dist 是否存在并列出文件（可选）
-      - name: Verify dist folder
-        run: |
-          if [ ! -d "dist" ]; then
-            echo "Error: dist folder not found!"
-            exit 1
-          fi
-          ls -l dist
-
-      #  上传 dist 作为 artifact
-      - name: Upload built site as artifact
-        uses: actions/upload-artifact@v4
+      - run: npm install --legacy-peer-deps
+      - run: npm run build
+      # 检查 dist 中的 symlink
+      - name: Check for symlinks
+        run: find dist -type l
+      # 删除 dist 中所有 symlink，保证 deploy 成功
+      - name: Remove symlinks from dist
+        run: find dist -type l -exec rm -f {} +
+      - uses: actions/upload-artifact@v4
         with:
           name: github-pages
           path: dist
