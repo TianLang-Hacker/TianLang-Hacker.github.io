@@ -22,32 +22,23 @@ jobs:
         with:
           node-version: 24
 
-      # 手动安装依赖，加上 --legacy-peer-deps 避免 ERROSE
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      # 构建 Astro 项目
       - name: Build Astro site
         run: npm run build
 
-      # 可选：上传到缓存 / 输出目录
-      - name: Upload Astro site
+      - name: Upload built site as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist
+          name: github-pages
           path: dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download built site
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
-
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v5
         with:
-          folder: dist
+          artifact_name: github-pages
