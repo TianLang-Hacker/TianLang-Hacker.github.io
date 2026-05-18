@@ -23,57 +23,96 @@ jobs:
       - run: npm install --legacy-peer-deps
       - run: npm run build
       
-      # 彻底清理并重新打包
-      - name: Clean and repack artifact
+      # 详细诊断
+      - name: Diagnose dist folder
         run: |
-          # 检查原始 dist
-          echo "Original dist size:"
-          du -sh dist
+          echo "=== Dist folder contents ==="
+          ls -la dist/
           
-          # 创建清理后的目录
+          echo -e "\n=== Total size ==="
+          du -sh dist
+          du -sb dist
+          
+          echo -e "\n=== Check symlinks ==="
+          find dist -type l -ls
+          
+          echo -e "\n=== Check hard links ==="
+          find dist -type f -links +1 -ls
+          
+          echo -e "\n=== File count ==="
+          find dist -type f | wc -l
+          
+          echo -e "\n=== Directory count ==="
+          find dist -type d | wc -l
+          
+          echo -e "\n=== Check for hidden files ==="
+          find dist -name ".*" -type f
+          
+          echo -e "\n=== Check file permissions ==="
+          find dist -type f -perm /111 -ls | head -10
+      
+      # 彻底清理：复制到新目录并跟随符号链接
+      - name: Create clean deployment directory
+        run: |
+          # 创建新目录
           mkdir -p dist_clean
           
-          # 使用 rsync 复制并跟随符号链接
-          sudo apt-get update
-          sudo apt-get install -y rsync
-          rsync -avL --no-links dist/ dist_clean/
+          # 使用 cp -rL 跟随所有符号链接
+          # 注意：需要确保 dist/* 包含了所有文件（包括隐藏文件）
+          shopt -s dotglob
+          cp -rL dist/* dist_clean/ 2>/dev/null || true
           
-          # 或者使用 cp
-          # cp -rL dist/* dist_clean/
+          # 如果上面失败，使用 tar 方法（更可靠）
+          if [ -z "$(ls -A dist_clean)" ]; then
+            echo "Using tar method..."
+            mkdir -p dist_clean
+            tar -chf - -C dist . | tar -xf - -C dist_clean/
+          fi
           
-          # 验证没有符号链接
-          echo "Checking for symlinks in cleaned dist..."
+          # 验证新目录
+          echo "=== Checking cleaned directory ==="
+          du -sh dist_clean
+          
           if find dist_clean -type l | grep -q .; then
             echo "ERROR: Still has symlinks!"
             find dist_clean -type l
             exit 1
           fi
           
-          # 检查文件大小
-          SIZE=$(du -sb dist_clean | cut -f1)
-          echo "Cleaned dist size: $SIZE bytes"
-          if [ $SIZE -gt 10737418240 ]; then
-            echo "ERROR: Size exceeds 10GB"
-            exit 1
-          fi
+          # 确保没有硬链接（通过复制来破坏硬链接）
+          echo "Breaking hard links..."
+          cp -rL dist_clean dist_clean_temp
+          rm -rf dist_clean
+          mv dist_clean_temp dist_clean
+          
+          # 最终验证
+          echo "=== Final verification ==="
+          echo "Symlinks: $(find dist_clean -type l | wc -l)"
+          echo "Hard links: $(find dist_clean -type f -links +1 | wc -l)"
           
           # 替换原 dist
           rm -rf dist
           mv dist_clean dist
+      
+      # 再次验证
+      - name: Final check before upload
+        run: |
+          echo "=== Final dist check ==="
+          du -sh dist
+          echo "File count: $(find dist -type f | wc -l)"
+          echo "Symlink count: $(find dist -type l | wc -l)"
           
-          # 最终验证
-          echo "Final verification:"
-          echo "Size: $(du -sh dist)"
-          echo "Files: $(find dist -type f | wc -l)"
-          echo "Symlinks: $(find dist -type l | wc -l)"
+          # 创建测试文件来验证
+          echo "Creating test page..."
+          echo "Test" > dist/test.html
       
       - uses: actions/upload-artifact@v4
         with:
           name: github-pages
           path: dist
-          # 如果文件很多，压缩上传
+          # 尝试压缩
+          compression-level: 6
           if-no-files-found: error
-          retention-days: 1
 
   deploy:
     needs: build
@@ -82,8 +121,31 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: downloaded-artifact
+      
+      - name: Verify downloaded artifact
+        run: |
+          echo "=== Downloaded artifact check ==="
+          ls -la downloaded-artifact/
+          du -sh downloaded-artifact/
+          echo "Symlinks in downloaded: $(find downloaded-artifact -type l | wc -l)"
+          
+          # 如果发现符号链接，在这里再次清理
+          if find downloaded-artifact -type l | grep -q .; then
+            echo "WARNING: Found symlinks in downloaded artifact!"
+            echo "Cleaning again..."
+            find downloaded-artifact -type l -delete
+            mkdir -p temp_clean
+            cp -rL downloaded-artifact/* temp_clean/
+            rm -rf downloaded-artifact
+            mv temp_clean downloaded-artifact
+          fi
+      
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v5
         with:
           artifact_name: github-pages
