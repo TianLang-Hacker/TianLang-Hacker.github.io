@@ -1,14 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  # 每次推送到 `main` 分支时触发这个“工作流程”
-  # 如果你使用了别的分支名，请按需将 `main` 替换成你的分支名
   push:
     branches: [ main ]
-  # 允许你在 GitHub 上的 Actions 标签中手动触发此“工作流程”
   workflow_dispatch:
 
-# 允许 job 克隆 repo 并创建一个 page deployment
 permissions:
   contents: read
   pages: write
@@ -26,29 +22,32 @@ jobs:
         with:
           node-version: 24
 
-      - name: Install dependencies with legacy-peer-deps
+      # 手动安装依赖，加上 --legacy-peer-deps 避免 ERROSE
+      - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      # 构建 Astro 项目
       - name: Build Astro site
         run: npm run build
 
+      # 可选：上传到缓存 / 输出目录
       - name: Upload Astro site
-        uses: withastro/action@v6
+        uses: actions/upload-artifact@v3
         with:
-          node-version: 24
-          package-manager: npm@latest
-          path: .
-          cache: true
-          cache-dir: node_modules/.astro
-          out-dir: dist
+          name: dist
+          path: dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Download built site
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          folder: dist
