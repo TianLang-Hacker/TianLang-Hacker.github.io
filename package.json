@@ -20,7 +20,7 @@
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
-    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/tailwind": "^7.0.0",
     "@notionhq/client": "^2.3.0",
     "@playform/compress": "^0.1.9",
     "@rollup/plugin-terser": "^0.4.4",
