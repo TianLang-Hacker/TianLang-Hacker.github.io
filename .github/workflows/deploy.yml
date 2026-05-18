@@ -32,7 +32,7 @@ jobs:
 
       # 可选：上传到缓存 / 输出目录
       - name: Upload Astro site
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
