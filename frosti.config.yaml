@@ -58,6 +58,12 @@ site:
           href: /blog/category/Anime
           svg: "material-symbols:play-circle-outline"
           target: _self
+
+        - id: daily
+          text: 日常
+          href: /blog/category/Daily
+          svg: "material-symbols:calendar-month-outline-rounded"
+          target: _self
         # 子菜单项配置
     - id: project
       text: 项目
