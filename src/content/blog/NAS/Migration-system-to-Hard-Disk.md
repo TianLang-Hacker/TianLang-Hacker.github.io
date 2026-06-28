@@ -19,7 +19,7 @@ tags:
 
 自从我2025年10月11号买了OEC Turbo刷Armbian后就一直拿来当小服务器使用，挂了一堆服务，用着用着发现6GB的系统空间还是不够用，安装CasaOS后在应用市场里下载软件容器后就没多少空间了，限制太大了，所以这次额外买了120G固态来把Armbian Linux 迁移到外接的硬盘里，这样不管下载多少容器都不用担心容量空间不足了。
 
-<img src="/public/image/Flashing%20OEC%20Turbo/Goofish-by-OECT.png" width="500" height="438.5">
+<img src="/image/Flashing%20OEC%20Turbo/Goofish-by-OECT.png" width="500" height="438.5">
 
 ## 资源下载
 资源我放到了 GitHub 仓库里了，有需要的可以去 GitHub 看看。
@@ -46,13 +46,13 @@ https://cdn.gh-proxy.org/https://github.com/TianLang-Hacker/OEC-OEC-Turbo-Flash-
 
 首先准备一个OEC或者OEC Turbo，打开提前下载好的驱动包，找到DriverInstall.exe
 
-![](/public/image/Flashing%20OEC%20Turbo/Driver%20Folder.png)
+![](/image/Flashing%20OEC%20Turbo/Driver%20Folder.png)
 
-![](/public/image/Flashing%20OEC%20Turbo/Install-Driver.png)
+![](/image/Flashing%20OEC%20Turbo/Install-Driver.png)
 
 点击“开始安装”，等待安装成功。
 
-![](/public/image/Flashing%20OEC%20Turbo/Install-driver-success.png)
+![](/image/Flashing%20OEC%20Turbo/Install-driver-success.png)
 
 ### 刷入Armbian Linux
 注意：本次刷机只适合刷机后的 OEC 或 OEC Turbo，不适用第一次刷机，如果机器是第一次刷机则需要拆出主板短接两个触点后插入数据线连接电脑，直到瑞芯微开发工具提示“发现一个MASKROM设备”为止，我的机器之前我自己刷过了，这里就不赘述了（主要是拆开来拍照麻烦）。
@@ -60,38 +60,38 @@ https://cdn.gh-proxy.org/https://github.com/TianLang-Hacker/OEC-OEC-Turbo-Flash-
 <br>
 首先掀开机器底部，盖子向上推即可打开底盖。
 
-<img src="/public/image/Flashing%20OEC%20Turbo/OECT.jpg" width="400" hetght="600">
-<img src="/public/image/Flashing%20OEC%20Turbo/OECT_USB-C.jpg" width="400" height="600">
+<img src="/image/Flashing%20OEC%20Turbo/OECT.jpg" width="400" hetght="600">
+<img src="/image/Flashing%20OEC%20Turbo/OECT_USB-C.jpg" width="400" height="600">
 
 打开RKDevTool.exe，进入瑞芯微的刷机界面。
 
-![](/public/image/Flashing%20OEC%20Turbo/RKDev-tools.png)
-![](/public/image/Flashing%20OEC%20Turbo/RKDev-tools-none.png)
+![](/image/Flashing%20OEC%20Turbo/RKDev-tools.png)
+![](/image/Flashing%20OEC%20Turbo/RKDev-tools-none.png)
 
 按住RESET孔后数据线连接机器，进入LOADER状态
 
-<img src="/public/image/Flashing%20OEC%20Turbo/OECT_RESET.jpg" width="400" height="600">
-<img src="/public/image/Flashing%20OEC%20Turbo/RKDevTool_LOADER.png">
+<img src="/image/Flashing%20OEC%20Turbo/OECT_RESET.jpg" width="400" height="600">
+<img src="/image/Flashing%20OEC%20Turbo/RKDevTool_LOADER.png">
 
 进入LOADER状态后勾选system，选择Armbian镜像，选择完成后点击执行，等待它刷入完成，这个过程需要几分钟，坐在旁边玩手机或者吃顿饭就行~
 
-![](/public/image/Flashing%20OEC%20Turbo/Flashing-Armbian.png)
-![](/public/image/Flashing%20OEC%20Turbo/Flash-done.png)
+![](/image/Flashing%20OEC%20Turbo/Flashing-Armbian.png)
+![](/image/Flashing%20OEC%20Turbo/Flash-done.png)
 
 完成后关闭RKDevTool.exe，拔掉USB-C数据线，准备插电自动开机。
 
 ### 配置Armbian Linux
 将网线接入RJ45接口，与电脑处在同一个局域网内，可以在路由器的后台发现该设备。
 
-<img src="/public/image/Flashing%20OEC%20Turbo/LAN-Devices.png" width="824" height="824">
+<img src="/image/Flashing%20OEC%20Turbo/LAN-Devices.png" width="824" height="824">
 
 找到armbian，查看它的IP地址
 
-<img src="/public/image/Flashing%20OEC%20Turbo/DevicesIP.png" width=815 height=471>
+<img src="/image/Flashing%20OEC%20Turbo/DevicesIP.png" width=815 height=471>
 
 已知它的IP是192.168.0.106（以此为例），使用ssh连接Armbian。如果没有ssh，可以在Windows设置里的可选功能找到OpenSSH。
 
-![](/public/image/Flashing%20OEC%20Turbo/SSH.png)
+![](/image/Flashing%20OEC%20Turbo/SSH.png)
 
 安装完成后使用SSH连接Armbian（IP地址仅当例子，要按自己实际的IP去填写）。
 
@@ -102,7 +102,7 @@ ssh root@192.168.0.106
 
 登录进系统后发现需要你简单设置一下系统
 
-![](/public/image/Flashing%20OEC%20Turbo/Set-Linux.png)
+![](/image/Flashing%20OEC%20Turbo/Set-Linux.png)
 
 在这里需要设置root密码和选择一个默认shell，这里我选择zsh，因为比bash好用😋
 
@@ -110,7 +110,7 @@ ssh root@192.168.0.106
 
 上面的步骤配置完成后就可以进Armbian Linux了。
 
-![](/public/image/Flashing%20OEC%20Turbo/Armbian-set-done.png)
+![](/image/Flashing%20OEC%20Turbo/Armbian-set-done.png)
 
 ## 迁移系统
 
@@ -122,7 +122,7 @@ ssh root@192.168.0.106
 
 首先在DiskGenius分好两个分区，一个是系统分区，一个是数据分区（可以当NAS用），两个硬盘分区都是EXT4格式。
 
-![](/public/image/Flashing%20OEC%20Turbo/DiskGenius.png)
+![](/image/Flashing%20OEC%20Turbo/DiskGenius.png)
 
 首先点击“删除分区”，把所有的分区全部删掉，删掉后使用快速分区分出两个分区，第一个分区最好30GB起步，剩下的空间作为第二个分区，分好区后格式化成EXT4文件系统。
 <br>
@@ -172,7 +172,7 @@ mount  /dev/sda1  /mnt/sda1
 ```bash
 rsync -aAXv / /mnt/sda1 --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"}
 ```
-![](/public/image/Flashing%20OEC%20Turbo/rsync.png)
+![](/image/Flashing%20OEC%20Turbo/rsync.png)
 
 ### 查看sda1新分区的 UUID
 
