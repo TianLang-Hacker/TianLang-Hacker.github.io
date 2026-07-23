@@ -32,12 +32,12 @@ tags:
 Cloudflare混合加速
 
 ```bash
-https://gh-proxy.org/https://github.com/TianLang-Hacker/OEC-OEC-Turbo-Flash-tool-and-Armbian-Linux-mirror/releases/download/1.0/OEC-OEC_Turbo_Flash_Driver_and_Armbian_Linux_img.zip
+https://gh-proxy.org/https://github.com/TianLang-Hacker/OEC-OEC-Turbo-Flash-tool-and-Armbian-Linux-mirror/releases/download/1.1/OEC-OEC_Turbo_Flash_Driver_and_Armbian_Linux_img.zip
 ```
 
 Fastly CDN 加速
 ```bash
-https://cdn.gh-proxy.org/https://github.com/TianLang-Hacker/OEC-OEC-Turbo-Flash-tool-and-Armbian-Linux-mirror/releases/download/1.0/OEC-OEC_Turbo_Flash_Driver_and_Armbian_Linux_img.zip
+https://cdn.gh-proxy.org/https://github.com/TianLang-Hacker/OEC-OEC-Turbo-Flash-tool-and-Armbian-Linux-mirror/releases/download/1.1/OEC-OEC_Turbo_Flash_Driver_and_Armbian_Linux_img.zip
 ```
 
 ## 重装系统（如果你觉得你的机器不需要重装的话建议直接跳过“重装系统”步骤，跳到“迁移系统”步骤）
@@ -54,8 +54,35 @@ https://cdn.gh-proxy.org/https://github.com/TianLang-Hacker/OEC-OEC-Turbo-Flash-
 
 ![](/image/Flashing%20OEC%20Turbo/Install-driver-success.png)
 
-### 刷入Armbian Linux
-注意：本次刷机只适合刷机后的 OEC 或 OEC Turbo，不适用第一次刷机，如果机器是第一次刷机则需要拆出主板短接两个触点后插入数据线连接电脑，直到瑞芯微开发工具提示“发现一个MASKROM设备”为止，我的机器之前我自己刷过了，这里就不赘述了（主要是拆开来拍照麻烦）。
+
+### 刷入Armbian Linux（机器第一次刷机）
+**⚠️注意：本次刷机只适合机器第一次刷机的OEC 或 OEC Turbo，如果已经刷过机了建议跳过这个步骤看第二次刷机省去麻烦。**
+<br>
+<br>
+首先掀开机器底部，盖子向上推即可打开底盖。
+
+<img src="/image/Flashing%20OEC%20Turbo/OECT.jpg" width="400" hetght="600">
+<img src="/image/Flashing%20OEC%20Turbo/OECT_USB-C.jpg" width="400" height="600">
+
+看到底部几颗螺丝，全部拆掉后掀开侧板，侧板掀开后拆下所有的螺丝。拆下所有的螺丝后沿着底部把主板和硬盘槽中间的塑料隔板撬起，千万不能大力出奇迹，否则 SATA 排线可能会扯断。
+
+<img src="/image/Flashing%20OEC%20Turbo/Motherboard.png" width="839" hetght="629">
+
+打开RKDevTool.exe，进入瑞芯微的刷机界面。
+
+此时掀起机器的隔板后找到主板上的 GND 触点和 1V8 触点，使用镊子或者别的什么金属导体短接两个触点，短接后数据线直接插入机器与电脑连接（不要连接电源），此时刷机工具提示找到 MASKROM 设备。
+
+找到设备后勾选LoaderToDDR（如果只有Loader则需要双击Loader选择LoaderToDDR）和system。
+路径选择里LoaderToDDR选择资源下载里下载的资源，找到MiniLoaderAll.bin文件并选中它；system选择img镜像，同样在资源下载里下载到的压缩包里。
+
+选择完文件后点击执行，等待它刷入完成。这个过程需要等待几分钟，坐在旁边刷手机玩电脑等待就行~
+
+<img src="/image/Flashing OEC Turbo/MASKROM_FLASHING.png">
+
+完成后关闭RKDevTool.exe，拔掉USB-C数据线，准备插电自动开机。
+
+### 刷入Armbian Linux（机器刷过机）
+**⚠️注意：本次刷机只适合机器刷机后的 OEC 或 OEC Turbo，不适用第一次刷机，如果是第一次刷机的则跳过这一步**
 <br>
 <br>
 首先掀开机器底部，盖子向上推即可打开底盖。
@@ -306,3 +333,7 @@ armbian:~:#
 现在我们可以看到第15行上面写着 Usage of /:   7% of 30G ，说明系统迁移成功。
 
 至此，你拥有了一个大容量的OEC Turbo了，开搞开搞😋
+
+<br>
+<br>
+-最后一次修改于2026年07月23日
