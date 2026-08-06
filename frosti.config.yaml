@@ -8,10 +8,10 @@ site:
   theme: # 更多主题 https://daisyui.com/docs/themes/
     light: winter # 主题的浅色模式
     dark: dracula # 主题的深色模式
-    code: github-dark # 代码块的主题 https://shiki.style/themes
-  date_format: YYYY年MM月DD日 dddd # 日期格式设置，支持自定义格式
+    code: github-dark # 代码块的主题 https://expressive-code.com/guides/themes/
+  date_format: YYYY年 MM月DD日 dddd # 日期格式设置，支持自定义格式
   blog: # 博客相关配置
-    pageSize: 10 # 每页显示的文章数量
+    pageSize: 8 # 每页显示的文章数量
   menu: # 菜单配置
     - id: home # 菜单项的唯一标识符
       text: 首页 # 菜单项显示的文本
@@ -30,11 +30,11 @@ site:
       target: _self
       subItems:
         - id: all
-          text: 所有blogs
+          text: 所有 Blogs
           href: /blog
           svg: "material-symbols:ink-pen-outline-rounded"
           target: _self
-        
+
         - id: Linux
           text: Linux
           href: /blog/category/Linux
@@ -70,11 +70,14 @@ site:
       href: /project
       svg: "material-symbols:code-blocks-outline"
       target: _self
+    
     - id: friend
       text: 友链
       href: /friend
       svg: "material-symbols:supervisor-account-outline-rounded"
       target: _self
+
+
 # 用户的个人信息
 user:
   name: EveSunMaple # 用户名
@@ -123,4 +126,4 @@ user:
       - href: "https://t.me/+LCCpqJLBpWtlYjc1"
         ariaLabel: Telegram
         title: Telegram
-        svg: "ri:telegram-line"
+        svg: "ri:telegram-line" 

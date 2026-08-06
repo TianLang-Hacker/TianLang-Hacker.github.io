@@ -8,9 +8,9 @@
 
 [![license](https://badgen.net/github/license/EveSunMaple/Frosti)](https://github.com/EveSunMaple/Frosti/blob/main/LICENSE)&nbsp;&nbsp;&nbsp;[![release](https://badgen.net/github/release/EveSunMaple/Frosti)](https://github.com/EveSunMaple/Frosti/releases)&nbsp;&nbsp;&nbsp;[![stackblitz](https://developer.stackblitz.com/img/open_in_stackblitz_small.svg)](https://stackblitz.com/github/EveSunMaple/Frosti)
 
-[**🖥️ Frosti Demo**](https://frosti.saroprock.com)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**🌏 中文 README**](https://github.com/EveSunMaple/Frosti/blob/main/docs/README.zh-CN.md)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**❤️My Blog**](https://www.saroprock.com)
+[**🖥️ Frosti Demo**](https://frosti.saroprock.com)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**🌏 中文 README**](https://github.com/EveSunMaple/Frosti/blob/main/docs/README.zh-CN.md)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**❤️ My Blog**](https://www.saroprock.com)
 
-## 📷 Preview
+## 📷 预览
 
 ![preview](./preview-light.png)
 
@@ -24,6 +24,13 @@
 - ✅ RSS 订阅支持
 - 🛠️ 博客易上手
   - 可以在 `frosti.config.yaml` 自定义您博客的内容
+
+## 💬 评论系统
+
+- **教程（Waline）**
+  - https://frosti.saroprock.com/blog/adding-comment-systems
+- **自定义样式（SCSS）**
+  - 仓库已提供一份契合本站的默认评论样式：`src/styles/waline.scss`，你可以直接使用或自行修改。
 
 ## ✒️ 文章信息
 
@@ -195,6 +202,22 @@ zh: # 中文翻译
 
 1. 在 `translations.yaml` 文件中添加新的语言代码和对应翻译，或修改现有翻译
 2. 在 `frosti.config.yaml` 中更改 `site.language` 为您要使用的语言代码
+
+## 🚀 自动更新
+
+为了让您的项目与 Frosti 的最新版本保持同步，您可以使用我们提供的更新脚本。
+
+```sh
+bash frosti.update.sh
+```
+
+该脚本将：
+
+1.  **克隆最新版本** 的 Frosti 仓库。
+2.  **安全地更新** 您的项目文件，根据 `.updateignore` 文件添加和覆盖文件。
+3.  **智能地删除** 官方仓库中已移除的文件，而不会影响您忽略的文件。
+4.  **清理** 任何残留的空文件夹和临时文件。
+5.  使用 `pnpm` **安装或更新** 依赖项。
 
 ## 👀 问题
 

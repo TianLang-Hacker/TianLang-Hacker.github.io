@@ -1,7 +1,7 @@
 ---
 title: 记一次升级Android系统需要科学上网完成开机引导
 description: 完成开机引导
-pubDate: 11 06 2026
+pubDate: 2026-06-11
 image:
 categories:
   - Android

@@ -1,7 +1,7 @@
 ---
 title: One Room 观后感
 description: One Room
-pubDate: 22 04 2026
+pubDate: 2026-04-22
 image:
 categories:
   - Anime

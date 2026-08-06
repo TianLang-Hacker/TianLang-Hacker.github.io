@@ -8,7 +8,7 @@ A clean, elegant, and fast static blog template! 🚀 Built with Astro
 
 [![license](https://badgen.net/github/license/EveSunMaple/Frosti)](https://github.com/EveSunMaple/Frosti/blob/main/LICENSE)&nbsp;&nbsp;&nbsp;[![release](https://badgen.net/github/release/EveSunMaple/Frosti)](https://github.com/EveSunMaple/Frosti/releases)&nbsp;&nbsp;&nbsp;[![stackblitz](https://developer.stackblitz.com/img/open_in_stackblitz_small.svg)](https://stackblitz.com/github/EveSunMaple/Frosti)
 
-[**🖥️ Frosti Demo**](https://frosti.saroprock.com)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**🌏 Chinese README**](https://github.com/EveSunMaple/Frosti/blob/main/docs/README.zh-CN.md)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**❤️My Blog**](https://www.saroprock.com)
+[**🖥️ Frosti Demo**](https://frosti.saroprock.com)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**🌏 Chinese README**](https://github.com/EveSunMaple/Frosti/blob/main/docs/README.zh-CN.md)&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;[**❤️ My Blog**](https://www.saroprock.com)
 
 ## 📷 Preview
 
@@ -24,6 +24,13 @@ A clean, elegant, and fast static blog template! 🚀 Built with Astro
 - ✅ RSS feed support
 - 🛠️ Easy to use blog
   - Customize your blog content in `frosti.config.yaml`
+  
+## 💬 Comment System
+
+- **Tutorial (Waline)**
+  - https://frosti.saroprock.com/blog/adding-comment-systems
+- **Custom styles (SCSS)**
+  - This repo provides a default, site-matching comment stylesheet at `src/styles/waline.scss`. You can use it as-is or modify it to fit your needs.
 
 ## ✒️ Article Information
 
@@ -195,6 +202,22 @@ To add new language support or modify existing translations:
 
 1. Add a new language code and corresponding translations in the `translations.yaml` file, or modify existing translations
 2. Change `site.language` in `frosti.config.yaml` to your preferred language code
+
+## 🚀 Automatic Updates
+
+To keep your project up to date with the latest version of Frosti, you can use the provided update script.
+
+```sh
+bash frosti.update.sh
+```
+
+This script will:
+
+1.  **Clone the latest version** of the Frosti repository.
+2.  **Safely update** your project files, adding and overwriting files based on the `.updateignore` file.
+3.  **Intelligently delete** files that have been removed from the official repository, without affecting your ignored files.
+4.  **Clean up** any remaining empty folders and temporary files.
+5.  **Install or update** dependencies using `pnpm`.
 
 ## 👀 Issues
 

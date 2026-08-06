@@ -1,7 +1,7 @@
 ---
 title: 给Linux安装Clash实现代理上网并且实现软路由功能
 description: 安装Clash
-pubDate: 11 07 2025
+pubDate: 2025-07-11
 image:
 categories:
   - NAS

@@ -15,7 +15,7 @@ export async function GET(context: any) {
     site: context.site,
     items: sortedPosts.map((blog: CollectionEntry<"blog">) => ({
       ...blog.data,
-      link: `/blog/${blog.id}/`,
+      link: `/blog/${blog.id.replace(/\.(md|mdx)$/, "")}/`,
     })),
   });
 }

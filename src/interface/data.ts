@@ -1,13 +1,21 @@
-import type { CollectionEntry } from "astro:content";
-
-export interface PostStats {
-  totalCharCount: number;
-  readingTime: number;
+export interface Post {
+  [x: string]: any;
+  data: {
+    [x: string]: any;
+    title: string;
+    image: string;
+    description: string;
+    pubDate: Date;
+    badge: string;
+    categories: string[];
+    tags: string[];
+  };
+  remarkPluginFrontmatter: {
+    totalCharCount: string;
+    readingTime: string;
+  };
+  slug: string;
 }
-
-export type Post = CollectionEntry<"blog"> & {
-  remarkPluginFrontmatter: PostStats;
-};
 
 export interface Page {
   url: {
@@ -28,8 +36,8 @@ export interface PostData {
   badge?: string;
   categories?: string[];
   tags?: string[];
-  word?: number | string;
-  time?: number | string;
+  word?: string;
+  time?: string;
   url?: string;
 }
 

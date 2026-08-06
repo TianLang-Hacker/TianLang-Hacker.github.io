@@ -1,7 +1,7 @@
 ---
 title: Android设备获取Root权限
 description: 保姆级别的获取Root权限
-pubDate: 07 01 2025
+pubDate: 2025-01-07
 image: /image/Root/Root.jpg
 categories:
   - Android

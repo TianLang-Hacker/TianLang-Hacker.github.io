@@ -1,20 +1,13 @@
-import { defineCollection } from "astro:content";
-import { glob } from "astro/loaders";
-import { z } from "astro/zod";
-import { frontmatterDateSchema } from "./utils/frontmatterDate";
+import { defineCollection, z } from "astro:content";
 
 const blog = defineCollection({
-  loader: glob({
-    pattern: "**/*.{md,mdx}",
-    base: "./src/content/blog",
-    generateId: ({ entry }: { entry: string }) => entry.replace(/\\/g, "/").replace(/\.(md|mdx)$/, ""),
-  }),
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    pubDate: frontmatterDateSchema,
-    updated: frontmatterDateSchema.optional(),
-    image: z.string().nullish().transform((value: string | null | undefined) => value ?? undefined),
+    pubDate: z.coerce.date(),
+    updated: z.coerce.date().optional(),
+    image: z.string().nullish(),
     badge: z.string().optional(),
     draft: z.boolean().default(false),
     categories: z

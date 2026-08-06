@@ -4,7 +4,7 @@
     "target": "ESNext",
     "baseUrl": ".",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Node",
     "paths": {
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],

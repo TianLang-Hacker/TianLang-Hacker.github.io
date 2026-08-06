@@ -1,7 +1,7 @@
 ---
 title: 将OEC/OEC Turbo的系统迁移到外接硬盘里实现系统分区扩容
 description: OEC Turbo的系统迁移到外接硬盘
-pubDate: 28 06 2026
+pubDate: 2026-06-28
 image:
 categories:
   - Linux

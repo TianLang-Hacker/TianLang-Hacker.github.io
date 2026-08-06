@@ -1,6 +1,6 @@
-import type { Config } from "@interfaces/site";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import type { Config } from "@interfaces/site";
 import yaml from "js-yaml";
 
 // 配置文件路径
@@ -10,7 +10,9 @@ const translationsPath = path.resolve("src/i18n/translations.yaml");
 // 读取并解析 YAML 文件
 const config = yaml.load(fs.readFileSync(configPath, "utf8")) as Config;
 // 读取并解析翻译文件
-const translationsConfig = yaml.load(fs.readFileSync(translationsPath, "utf8")) as Record<string, any>;
+const translationsConfig = yaml.load(
+  fs.readFileSync(translationsPath, "utf8"),
+) as Record<string, any>;
 
 // 网站基本信息
 export const SITE_TAB = config.site.tab;
@@ -63,9 +65,7 @@ export function t(key: string): string {
   const keyParts = key.split(".");
   let result = currentLangTranslations;
 
-  for (let i = 0; i < keyParts.length; i++) {
-    const part = keyParts[i];
-
+  for (const part of keyParts) {
     if (!result || typeof result !== "object") {
       translationCache[key] = key; // 缓存结果
       return key;
