@@ -1,5 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 import { BLOG_PAGE_SIZE } from "@config";
+import type { Post } from "@interfaces/data";
 import {
   getAllPosts,
   getPostsWithStats,
@@ -26,7 +27,7 @@ async function getTaxonomyPaginationPaths({
   const postsWithStats = await getPostsWithStats(sortedPosts);
 
   return values.flatMap((value) => {
-    const filteredPosts = postsWithStats.filter((blog: any) =>
+    const filteredPosts = postsWithStats.filter((blog: Post) =>
       blog.data[key]?.includes(value),
     );
     return paginate(filteredPosts, {

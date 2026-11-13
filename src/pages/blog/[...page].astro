@@ -1,13 +1,13 @@
 ---
-import type { Post, Page } from "@interfaces/data";
 import PostCard from "@components/PostCard.astro";
-import BaseLayout from "@layouts/BaseLayout.astro";
-import Pagination from "@components/widgets/Pagination.astro";
 import CardGroup from "@components/temple/CardGroup.astro";
-import { Icon } from "astro-icon/components";
+import Pagination from "@components/widgets/Pagination.astro";
 import { t } from "@config";
+import type { Page, Post } from "@interfaces/data";
+import BaseLayout from "@layouts/BaseLayout.astro";
 import { generatePageLinks } from "@utils/blogUtils";
 import { getMainBlogPaginationPaths } from "@utils/paginationUtils";
+import { Icon } from "astro-icon/components";
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
   return getMainBlogPaginationPaths({ paginate });
@@ -20,13 +20,12 @@ const pageLinks = generatePageLinks(totalPages);
 ---
 
 <BaseLayout title="Blog">
+  <h1 class="sr-only">{t("label.blogPage")}</h1>
+
   <!-- Blog Navigation Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <CardGroup cols="2">
     <!-- Archives Card -->
-    <a
-      href="/blog/archives"
-      class="card bg-base-100 shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1"
-    >
+    <a href="/blog/archives" class="card bg-base-100 shadow-lg">
       <div class="card-body p-4">
         <div class="flex items-center gap-3">
           <div class="rounded-full bg-accent/10 p-3">
@@ -41,10 +40,7 @@ const pageLinks = generatePageLinks(totalPages);
     </a>
 
     <!-- Categories Card -->
-    <a
-      href="/blog/categories"
-      class="card bg-base-100 shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1"
-    >
+    <a href="/blog/categories" class="card bg-base-100 shadow-lg">
       <div class="card-body p-4">
         <div class="flex items-center gap-3">
           <div class="rounded-full bg-primary/10 p-3">
@@ -59,10 +55,7 @@ const pageLinks = generatePageLinks(totalPages);
     </a>
 
     <!-- Tags Card -->
-    <a
-      href="/blog/tags"
-      class="card bg-base-100 shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1"
-    >
+    <a href="/blog/tags" class="card bg-base-100 shadow-lg">
       <div class="card-body p-4">
         <div class="flex items-center gap-3">
           <div class="rounded-full bg-secondary/10 p-3">
@@ -77,10 +70,7 @@ const pageLinks = generatePageLinks(totalPages);
     </a>
 
     <!-- Search Card -->
-    <a
-      href="/blog/search"
-      class="card bg-base-100 shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1"
-    >
+    <a href="/blog/search" class="card bg-base-100 shadow-lg">
       <div class="card-body p-4">
         <div class="flex items-center gap-3">
           <div class="rounded-full bg-info/10 p-3">
@@ -93,17 +83,18 @@ const pageLinks = generatePageLinks(totalPages);
         </div>
       </div>
     </a>
-  </div>
+  </CardGroup>
 
   <!-- Blog Post List -->
-  <CardGroup cols="1" gap="6">
+  <CardGroup cols="1">
     {
-      page.data.map((blog: Post) => (
+      page.data.map((blog: Post, index: number) => (
         <PostCard
+          priority={index === 0}
           title={blog.data.title}
           image={blog.data.image}
           description={blog.data.description}
-          url={"/blog/" + blog.id.replace(/\.(md|mdx)$/, "")}
+          url={"/blog/" + blog.id}
           pubDate={blog.data.pubDate}
           badge={blog.data.badge}
           categories={blog.data.categories}

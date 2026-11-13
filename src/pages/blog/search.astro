@@ -1,7 +1,7 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
 import BaseCard from "@components/BaseCard.astro";
 import { t } from "@config";
+import BaseLayout from "@layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 ---
 
@@ -23,7 +23,7 @@ import { Icon } from "astro-icon/components";
 
   <BaseCard>
     <div id="search-container" class="w-full">
-      <div id="pagefind-search" transition:persist></div>
+      <div id="pagefind-search"></div>
     </div>
   </BaseCard>
 </BaseLayout>
@@ -80,10 +80,7 @@ import { Icon } from "astro-icon/components";
         if (searchContainer) {
           searchContainer.innerHTML = `
             <div class="alert alert-error shadow-lg">
-              <div>
-                <Icon name="lucide:alert-triangle" class="w-6 h-6" />
-                <span>Error loading search functionality. Please try again later.</span>
-              </div>
+              Error loading search functionality. Please try again later.
             </div>
           `;
         }

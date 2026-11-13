@@ -1011,3 +1011,73 @@
 ### Fix
 
 - 修复了站点地图包含草稿文章的问题，并且移除了之前的错误实现 #97
+
+## [4.0.0] - 2026-08-09
+
+### Breaking Changes
+
+- 升级到 Astro 7，内容集合配置已迁移到 `src/content.config.ts` 并使用新的 glob loader；自定义过内容集合的部署需要同步调整
+
+### Features
+
+- 同步升级 MDX、RSS、Sitemap、Expressive Code、Compress 等集成
+- 为文章页添加 `BlogPosting` JSON-LD，为其他页面添加 `WebSite` JSON-LD
+- 补全 Open Graph / Twitter Card 元信息，并为非文章页提供默认分享图
+- 新增“跳到主要内容”的无障碍快捷链接
+- CI 新增生产构建与依赖安全审计
+
+### Refactored
+
+- 使用 Astro 渲染后的 HTML 生成 RSS，不再出现 MDX 源码或未渲染的数学公式
+- 移除 GitHubStats 的随机假提交热力图，并清理无效 props
+- 优化图片：`public/` 大图全部转 WebP 并压缩，构建体积从约 10MB 降至约 4.5MB
+- DaisyUI 仅打包当前使用的两个主题，按需加载 KaTeX 与 dayjs 语言包
+- 统一 sharp 版本，消除构建期重复 libvips 警告
+- 收紧 TypeScript 类型，移除大量 `any`
+
+### Fix
+
+- 修复 `pnpm run search:clean` 因缺少 `rimraf` 而失败的问题
+- 修复 RSS 非法的 `xmlns:version` 命名空间与发布日期偏移
+- 修复博客卡片标题非法 ID、`BaseCard` 重复 ID、目录锚点在禁用 JS 时失效的问题
+- 修复外部链接缺少 `rel="noopener noreferrer"` 的问题
+- 修复系统主题偏好首次访问后被固定、不再跟随系统变化的问题
+- 修复 `Makrdown` 标签拼写错误
+- 修复 Vercel 构建时 pnpm 版本与 lockfile 不匹配、`@parcel/watcher` 构建脚本未授权的问题
+
+### Chore
+
+- 移除大量未使用的依赖与死代码
+- 更新 VS Code 配置、贡献指南与安全策略文档
+
+## [4.1.0] - 2026-10-09
+
+### Breaking Changes
+
+- 迁移到 Tailwind CSS v4（`@tailwindcss/postcss`）与 daisyUI 5，移除已废弃的 `@astrojs/tailwind` 并删除 `tailwind.config.mjs`；daisyUI 主题列表由 `src/integration/updateConfig.ts` 根据 `frosti.config.yaml` 自动生成，自定义过 Tailwind / daisyUI 配置的部署需要同步迁移
+
+### Features
+
+- 外链样式升级：使用 `astro-smart-links` 替换 `rehype-external-links`，外链自动附加图标，失效内链以波浪下划线高亮
+- daisyUI 主题列表自动生成，切换 `frosti.config.yaml` 中的主题名后无需再修改任何 CSS
+- 主题兜底：浅色主题作为 daisyUI `--default`，未知 `data-theme` 也能正常渲染
+
+### Refactored
+
+- MDX 提示组件（Info / Success / Warning / Error）改为内联实现，类名全部静态化，移除 `AlertBase` 模板与 Tailwind safelist
+- 移除未使用的依赖（`prettier`、`shiki`、`@iconify/json`、`@iconify-json/logos`、`@iconify-json/mdi`、`@iconify/tailwind` 等）
+
+### Fix
+
+- 修复标签路由 `getStaticPaths` 中多余的 `encodeURIComponent` 导致的预渲染路径不匹配 #103
+- 修复分页第 1 页链接指向 `${baseUrl}/1` 的问题
+- 修复视图过渡（View Transitions）后主题未恢复为系统偏好的问题
+- 修复切换主题名后旧 localStorage 主题残留导致的页面失样式：无效的已存主题会被忽略并清除
+- 修复 CI 中恒失败的 Biome 格式检查步骤；补充显式 `astro-check` 脚本
+- 升级 `astro`、`sharp`、`js-yaml` 等依赖并更新 pnpm overrides，修复 CI 中 `pnpm audit` 的安全审计失败（`braces` 暂无上游补丁，已加入审计忽略名单）
+
+### Chore
+
+- 统一换行符为 LF 并添加 `.gitattributes`
+- 统一许可证声明为 MIT（`LICENSE`、`package.json`、贡献指南）
+- 更新安全策略版本表、贡献指南与已过时的文档链接

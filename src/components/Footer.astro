@@ -19,18 +19,14 @@ import { Icon } from "astro-icon/components";
       ></path>
     </svg>
     <p>
-      Powered by <a href="https://github.com/EveSunMaple/Frosti" target="_blank" class="font-bold">Frosti Template</a>
+      Powered by <a href="https://github.com/EveSunMaple/Frosti" target="_blank" rel="noopener noreferrer" class="font-bold">Frosti Template</a>
       <br />
-      From <a href={USER_SITE} target="_blank" class="font-bold">{USER_NAME}</a>
-      <br />
-      Copyright © <a href=https://github.com/TianLang-Hacker target="_blank" class="font-bold">TianLang Hacker</a>
-      {new Date().getFullYear()} - All right reserved
-      <br />
-      <a class="font-bold" href="https://icp.gov.moe/?keyword=20241034" target="_blank">萌ICP备20241034号</a>
+      Copyright © <a href={USER_SITE} target="_blank" rel="noopener noreferrer" class="font-bold">{USER_NAME}</a>{" "}
+      {new Date().getFullYear()} - All rights reserved
     </p>
   </aside>
   <nav>
-    <span class="footer-title">社交媒体</span>
+    <span class="footer-title">Social</span>
     <div class="grid grid-flow-col gap-4">
       {
         USER_FOOTER_SOCIAL_ICONS.map((icon) => (
@@ -41,6 +37,11 @@ import { Icon } from "astro-icon/components";
           </div>
         ))
       }
+      <div class="tooltip" data-tip="RSS Feed">
+        <a tabindex="0" href="/rss.xml" aria-label="RSS Feed">
+          <Icon name="ri:rss-line" class="text-2xl md:text-xl" />
+        </a>
+      </div>
     </div>
   </nav>
 </footer>
