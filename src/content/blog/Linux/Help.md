@@ -2,7 +2,6 @@
 title: Linux使用过程中的部分问题解决方案（有些已经不可用）
 description: 解决方案
 pubDate: 2026-05-18
-image:
 categories:
   - Linux
 tags:

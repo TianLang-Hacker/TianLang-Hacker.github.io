@@ -80,8 +80,8 @@ site:
 
 # 用户的个人信息
 user:
-  name: EveSunMaple # 用户名
-  site: "https://frosti.saroprock.com" # 用户的网站链接
+  name: TianLang Hacker # 用户名
+  site: "https://tianlanghacker.moe/" # 用户的网站链接
   avatar: /image/TianLang-Hacker.png # 用户头像路径
   sidebar: # 侧边栏配置
     social:
