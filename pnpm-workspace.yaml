@@ -38,3 +38,7 @@ auditConfig:
   # advisory asks for >=3.0.4). Drop this entry once a fix is published.
   ignoreGhsas:
     - GHSA-vfj7-8cjw-p6xm
+    # picomatch ReDoS through single-branch repeated extglobs. The advisory asks
+    # for >=4.0.8, but registry.npmjs.org still tops out at 4.0.7 and OSV lists
+    # every version up to 4.0.7 as affected
+    - GHSA-fc5q-39xc-vjpf
