@@ -1,0 +1,201 @@
+---
+title: Linux 平台解决 Fcitx5 Rime 中州韵引擎输入法在 Election软件的 QQ Linux 打字漏字的问题
+description: Linux QQ解决Fcitx5 打字漏字的问题
+pubDate: 2026-11-19
+categories:
+  - Linux
+  - Daily
+tags:
+  - Linux
+  - QQ
+  - Wayland
+  - XWayland
+  - KDE Plasma
+---
+
+import Warning from "@components/mdx/Warning.astro";
+
+## 前言
+各位在使用 Linux 的时候也许遇到过在基于 Election 软件打字漏字的问题，例如打个“不太行”这三个字，结果打出来“i不塔行”，其中“tai”变成“ta”，“i”直接
+打进文本框里，打个字都要小心翼翼的生怕输入法出毛病。
+
+## 问题定位
+### 1、排查 Fcitx 5 的前端组件
+首先排查一下 Fcitx5 的 GTK/QT 前端组件是否缺失
+
+```bash
+sudo apt install fcitx5-frontend-gtk3 fcitx5-frontend-gtk4 fcitx5-frontend-qt5 fcitx5-frontend-qt6
+```
+
+### 2、查看 fcitx5-diagnose 的调试信息
+
+```bash
+sudo fcitx5-diagnose
+```
+
+可以在第 156 行左右的“查看 DBus 界面：”里找到 “来自 dbus 的调试信息”，查找关于 qq 这个进程的调试信息
+
+```bash
+5.  DBus 界面：
+
+    使用 `dbus-send` 来检查 dbus。
+
+    DBus 名称 `org.fcitx.Fcitx5` 的所有者是 `:1.63`。
+
+    DBus 名称 `org.fcitx.Fcitx5` 的 PID 所有者是 `4137`。
+
+    来自 dbus 的调试信息：
+
+           Group [x11::1] has 1 InputContext(s)
+          IC [02720eb805324d338c28279d78109bd4] program:qq frontend:xim cap:4000000012 focus:0
+        Group [wayland:] has 7 InputContext(s)
+          IC [c687df4e77364ce8b956096b928e8934] program:org.kde.kmenuedit frontend:wayland cap:d0072 focus:0
+          IC [fd46d07195ba4a1ea5ba6cff9c8168e2] program:qq frontend:wayland cap:d0072 focus:0
+          IC [a7a65e1cb38e4e13bda8d827b01ba195] program:org.kde.konsole frontend:wayland cap:72 focus:1
+          IC [7d760e58ef654999979677ee3c5f4715] program: frontend:wayland cap:72 focus:0
+        Input Context without group
+```
+可以看到调试信息里找到了两个 Group 字段，一个是 X11，一个是 Wayland。再仔细看每个字段里面都有 qq 这个进程，这就是根本原因。
+
+### 3、检查 Fcitx 5 的环境变量（无环境变量可跳过）
+检查一下 Fcitx 5 的环境变量，尽量删掉这些环境变量，避免因为全局变量环境干扰 Wayland 的原生输入
+
+```bash
+grep -rInE 'GTK_IM_MODULE|QT_IM_MODULE|XMODIFIERS' \
+  ~/.bashrc ~/.bash_profile ~/.profile ~/.zshrc ~/.xprofile ~/.xinitrc \
+  ~/.i18n ~/.pam_environment \
+  ~/.config/plasma-workspace/env/ \
+  ~/.config/environment.d/ ~/.config/gtk-2.0/ ~/.config/gtk-3.0/ ~/.config/gtk-4.0/ \
+  /etc/environment /etc/environment.d/ /etc/profile /etc/profile.d/ \
+  /usr/lib/environment.d/ /usr/share/environment.d/ \
+  2>/dev/null
+```
+
+有可能会输出以下结果：
+```bash
+/root/.config/plasma-workspace/env/im_vars.sh:2:#export GTK_IM_MODULE=fcitx
+/root/.config/plasma-workspace/env/im_vars.sh:3:#export QT_IM_MODULE=fcitx
+/root/.config/plasma-workspace/env/im_vars.sh:4:export XMODIFIERS=@im=fcitx
+```
+
+<p></p>
+
+``` bash
+cat /root/.config/plasma-workspace/env/im_vars.sh               
+#!/bin/bash
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export SDL_IM_MODULE=fcitx
+```
+<p></p>
+<Warning>注意：该文件它不一定每个人都有，还是要严格看一看自己的 Fcitx 5 全局环境变量文件的名称和位置，以免配置错误。</Warning>
+
+输出结果指向的是一个叫 `im_vars.sh` 的文件，查看这个文件可以看到里面有一些环境变量，在这些变量里 `GTK_IM_MODULE` 和 
+`QT_IM_MODULE` 是会干扰 Kwin 的输入法管理机制，最好是删掉或者注释掉这两行，保留用于兼容 XWayland 的 `XMODIFIERS` 和 `SDL_IM_MODULE`。
+
+编辑这个文件去掉它的全局环境变量
+```bash
+nano ~/.config/plasma-workspace/env/im_vars.sh
+```
+
+<p></p>
+
+```bash
+# export GTK_IM_MODULE=fcitx
+# export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export SDL_IM_MODULE=fcitx
+```
+
+### 4、查看 QQ 主进程的环境变量
+查看 QQ 主进程实际环境，看看应用到它身上的环境变量是什么样的
+
+```bash
+pgrep -af qq
+```
+
+<p></p> 
+
+```bash
+10648 /opt/QQ/qq --no-sandbox
+10650 /opt/QQ/qq --type=zygote --no-zygote-sandbox --no-sandbox
+10651 /opt/QQ/qq --type=zygote --no-sandbox
+10678 /opt/QQ/qq --type=zygote --no-zygote-sandbox --no-sandbox
+10833 /opt/QQ/qq --type=zygote --no-sandbox
+10870 /opt/QQ/qq --type=zygote --no-sandbox
+10900 /opt/QQ/qq --type=zygote --no-sandbox
+10928 /opt/QQ/qq --type=zygote --no-sandbox
+```
+我们可以看到输出的结果里面并没有什么 Wayland 参数，而 Election 有可能默认使用的就是 XWayland 方案。
+
+如何辨别哪个是主进程：看这些进程后面没有带 `--type=` 参数的哪个就是主进程，记住它的 PID 号，接下来查看它的主进程环境变量：
+
+```bash
+xargs -0 -L1 -a /proc/10648/environ | grep -E 'IM_MODULE|XMODIFIERS|OZONE|WAYLAND|DISPLAY'
+```
+
+<p></p>
+
+```bash
+DISPLAY=:1
+QT_WAYLAND_RECONNECT=1
+SDL_IM_MODULE=fcitx
+WAYLAND_DISPLAY=wayland-0
+XMODIFIERS=@im=fcitx
+ELECTRON_OZONE_PLATFORM_HINT=x11
+```
+可以看到 `ELECTRON_OZONE_PLATFORM_HINT=x11` 强制把 QQ 用 Xwayland 模式运行，这就是为什么 `fcitx5-diagnose` 里会同时出现 X11 和 Wayland 的原因了。
+
+## 问题定位
+
+还记得之前 Dbus 调试出的结果吗？一个走的 XIM 的 X11，一个走的 Wayland。X11和 Wayland 的输入法机制不一样，X11 的输入法机制是通过 `XIM
+（X Input Method）`协议来实现，而 Wayland 的输入法机制是通过 `text-input` 协议来实现的，二者互相干扰导致了打字漏字的问题。
+
+## 解决方案
+
+### 1、Kill 掉 QQ 进程
+
+退出 QQ，不能有残留，方便后续修改。
+```bash
+pkill -f 'opt/QQ/qq'
+pgrep -af 'opt/QQ/qq'
+```
+
+### 2、编辑 qq.desktop 文件
+
+编辑用户级 desktop 文件 `~/.local/share/applications/qq.desktop`（覆盖系统级 `/usr/share/applications/qq.desktop`），将 `Exec=` 行从：
+
+```
+Exec=/opt/QQ/qq %U --no-sandbox
+```
+
+改为：
+
+```
+Exec=env LANG=en_US.UTF-8 ELECTRON_OZONE_PLATFORM_HINT=auto /opt/QQ/qq --no-sandbox --enable-features=UseOzonePlatform --enable-wayland-ime --wayland-text-input-version=3 %U
+```
+
+参数说明：
+
+| 参数 | 作用 |
+|---|---|
+| `LANG=en_US.UTF-8` | 仅对 QQ 生效的英文 Locale，规避中文 Locale 下的 Electron 输入法缺陷 |
+| `ELECTRON_OZONE_PLATFORM_HINT=auto` | 在 Wayland 会话下让 Electron 自动选择 Wayland，而非 X11 |
+| `--no-sandbox` | 官方 deb 包通常需要的沙箱参数（非 root 用户可以不添加。 |
+| `--enable-features=UseOzonePlatform` | 启用 Ozone 平台抽象层 |
+| `--enable-wayland-ime` | 启用 Wayland 原生输入法支持 |
+| `--wayland-text-input-version=3` | 强制使用 text-input-v3 协议，适配 KDE |
+
+### 3、为 Fcitx 设置一个静态的输入法模块
+
+为 GTK 应用静态指定输入法模块，仅写配置文件，不设全局环境变量，避免干扰 Wayland 原生应用。编辑 `~/.config/gtk-3.0/settings.ini`（不存在则创建）：
+
+```ini
+[Settings]
+gtk-im-module=fcitx
+```
+
+如果存在 `settings.ini` 文件且里面本来就有内容则接着后面添加参数。
+
+改完后彻底退出 QQ 并从应用菜单重启，**漏字问题不再出现**。
