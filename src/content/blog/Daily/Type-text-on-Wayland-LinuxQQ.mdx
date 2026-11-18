@@ -1,5 +1,5 @@
 ---
-title: Linux 平台解决 Fcitx5 Rime 中州韵引擎输入法在 Election软件的 QQ Linux 打字漏字的问题
+title: Linux 平台解决 Fcitx5 Rime 中州韵引擎输入法在 Electron软件的 QQ Linux 打字漏字的问题
 description: Linux QQ解决Fcitx5 打字漏字的问题
 pubDate: 2026-11-19
 categories:
@@ -16,7 +16,7 @@ tags:
 import Warning from "@components/mdx/Warning.astro";
 
 ## 前言
-各位在使用 Linux 的时候也许遇到过在基于 Election 软件打字漏字的问题，例如打个“不太行”这三个字，结果打出来“i不塔行”，其中“tai”变成“ta”，“i”直接
+各位在使用 Linux 的时候也许遇到过在基于 Electron 软件打字漏字的问题，例如打个“不太行”这三个字，结果打出来“i不塔行”，其中“tai”变成“ta”，“i”直接
 打进文本框里，打个字都要小心翼翼的生怕输入法出毛病。
 
 ## 问题定位
@@ -30,7 +30,7 @@ sudo apt install fcitx5-frontend-gtk3 fcitx5-frontend-gtk4 fcitx5-frontend-qt5 f
 ### 2、查看 fcitx5-diagnose 的调试信息
 
 ```bash
-sudo fcitx5-diagnose
+fcitx5-diagnose
 ```
 
 可以在第 156 行左右的“查看 DBus 界面：”里找到 “来自 dbus 的调试信息”，查找关于 qq 这个进程的调试信息
@@ -127,9 +127,9 @@ pgrep -af qq
 10900 /opt/QQ/qq --type=zygote --no-sandbox
 10928 /opt/QQ/qq --type=zygote --no-sandbox
 ```
-我们可以看到输出的结果里面并没有什么 Wayland 参数，而 Election 有可能默认使用的就是 XWayland 方案。
+我们可以看到输出的结果里面并没有什么 Wayland 参数，而 Electron 有可能默认使用的就是 XWayland 方案。
 
-如何辨别哪个是主进程：看这些进程后面没有带 `--type=` 参数的哪个就是主进程，记住它的 PID 号，接下来查看它的主进程环境变量：
+如何辨别哪个是主进程：看这些进程后面没有带 `--type=` 参数的就是主进程，记住它的 PID 号，接下来查看它的主进程环境变量：
 
 ```bash
 xargs -0 -L1 -a /proc/10648/environ | grep -E 'IM_MODULE|XMODIFIERS|OZONE|WAYLAND|DISPLAY'
@@ -145,9 +145,9 @@ WAYLAND_DISPLAY=wayland-0
 XMODIFIERS=@im=fcitx
 ELECTRON_OZONE_PLATFORM_HINT=x11
 ```
-可以看到 `ELECTRON_OZONE_PLATFORM_HINT=x11` 强制把 QQ 用 Xwayland 模式运行，这就是为什么 `fcitx5-diagnose` 里会同时出现 X11 和 Wayland 的原因了。
+可以看到 `ELECTRON_OZONE_PLATFORM_HINT=x11` 强制把 QQ 用 XWayland 模式运行，这就是为什么 `fcitx5-diagnose` 里会同时出现 X11 和 Wayland 的原因了。
 
-## 问题定位
+## 原因分析
 
 还记得之前 Dbus 调试出的结果吗？一个走的 XIM 的 X11，一个走的 Wayland。X11和 Wayland 的输入法机制不一样，X11 的输入法机制是通过 `XIM
 （X Input Method）`协议来实现，而 Wayland 的输入法机制是通过 `text-input` 协议来实现的，二者互相干扰导致了打字漏字的问题。
@@ -182,7 +182,7 @@ Exec=env LANG=en_US.UTF-8 ELECTRON_OZONE_PLATFORM_HINT=auto /opt/QQ/qq --no-sand
 |---|---|
 | `LANG=en_US.UTF-8` | 仅对 QQ 生效的英文 Locale，规避中文 Locale 下的 Electron 输入法缺陷 |
 | `ELECTRON_OZONE_PLATFORM_HINT=auto` | 在 Wayland 会话下让 Electron 自动选择 Wayland，而非 X11 |
-| `--no-sandbox` | 官方 deb 包通常需要的沙箱参数（非 root 用户可以不添加。 |
+| `--no-sandbox` | 官方 deb 包通常需要的沙箱参数（非 root 用户可以不添加）。 |
 | `--enable-features=UseOzonePlatform` | 启用 Ozone 平台抽象层 |
 | `--enable-wayland-ime` | 启用 Wayland 原生输入法支持 |
 | `--wayland-text-input-version=3` | 强制使用 text-input-v3 协议，适配 KDE |
